@@ -1,7 +1,9 @@
 "use client";
+import axios from "axios";
 import React, { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const TransactionModal = ({
   businessName,
@@ -44,6 +46,39 @@ const TransactionModal = ({
       className: "appearance-none",
     },
   ];
+  // Transaction Save Handler
+  async function transactionSaveHandler(e) {
+    e.preventDefault();
+    if (!productName || !quantity || !unitPurchasePrice || !unitSellingPrice) {
+      return toast.warning("All fields are required!");
+    }
+    const data = {
+      busniess_type: businessType,
+      user_name: "Default",
+      produc_name: productName.trim(),
+      quantity: Number(quantity),
+      unit_purchase_price: Number(unitPurchasePrice),
+      unit_selling_price: Number(unitSellingPrice),
+      payment_mode: paymentMode.trim(),
+      total_purchase_price: Number(quantity * unitPurchasePrice),
+      total_selling_price: Number(quantity * unitSellingPrice),
+      total_profit:
+        Number(quantity * unitSellingPrice) -
+        Number(quantity * unitPurchasePrice),
+    };
+
+    const response = await axios.post(
+      "/api/transactions/savetransaction",
+      data
+    );
+    console.log(response.data.data);
+    setTransactionModalOpen(false);
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
+  }
 
   return (
     <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none transition-opacity duration-500">
@@ -85,7 +120,10 @@ const TransactionModal = ({
           </div>
         </div>
         <div className="flex justify-center gap-2 py-2">
-          <button className="w-full flex flex-1 gap-2 justify-center items-center py-2 rounded-full shadow-xl hover:opacity-90 bg-[green] cursor-pointer text-white text-lg">
+          <button
+            onClick={transactionSaveHandler}
+            className="w-full flex flex-1 gap-2 justify-center items-center py-2 rounded-full shadow-xl hover:opacity-90 bg-[green] cursor-pointer text-white text-lg"
+          >
             <BiSave size={20} /> Save
           </button>
           <button

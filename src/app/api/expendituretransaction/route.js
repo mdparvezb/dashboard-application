@@ -11,7 +11,6 @@ export async function POST(request) {
     const response = await expenditureModel.create(data);
     return NextResponse.json({
       message: "Transaction Saved",
-      data: response,
       success: true,
     });
   } catch (error) {

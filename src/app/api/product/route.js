@@ -11,13 +11,12 @@ export async function POST(request) {
   try {
     const response = await productsModel.create(data);
     return NextResponse.json({
-      message: "Product Added",
-      data: response,
+      message: "Product Added Successfully!",
       success: true,
     });
   } catch (error) {
     return NextResponse.json({
-      message: "Product Failed to Add",
+      message: "Product Failed to Save",
       error: error,
       success: false,
     });

@@ -38,6 +38,7 @@ const ExpenditureModal = ({
     },
   ];
 
+  // Save Handler
   async function expenditureSaveHandler(e) {
     e.preventDefault();
     if (!expenseCategory || !description || !amount || !paymentMode) {

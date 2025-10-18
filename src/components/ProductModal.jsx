@@ -41,7 +41,6 @@ const ProductModal = ({ setProductModalOpen }) => {
   ];
 
   // Save Handler
-
   async function productSaveHandler(e) {
     e.preventDefault();
     if (!productName || !purchaseDate || !purchasePrice || !quantity) {
@@ -88,11 +87,11 @@ const ProductModal = ({ setProductModalOpen }) => {
             ))}
           </div>
           {/* Save and close Button */}
-          <div
-            onClick={productSaveHandler}
-            className="flex justify-center gap-2 py-2"
-          >
-            <button className="w-full flex flex-1 py-2 gap-2 justify-center items-center rounded-full shadow-xl hover:opacity-90 transition-all duration-300 bg-[green] cursor-pointer text-white text-sm md:text-lg">
+          <div className="flex justify-center gap-2 py-2">
+            <button
+              onClick={productSaveHandler}
+              className="w-full flex flex-1 py-2 gap-2 justify-center items-center rounded-full shadow-xl hover:opacity-90 transition-all duration-300 bg-[green] cursor-pointer text-white text-sm md:text-lg"
+            >
               <BiSave size={20} /> Save Product
             </button>
             <button
