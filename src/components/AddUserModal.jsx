@@ -28,6 +28,9 @@ const AddUserModal = ({ setAddUserModal }) => {
   // User Save Handler
   async function userSaveHandler(e) {
     e.preventDefault();
+    if(!userName || !userPassword) {
+      toast.warning("All fields are required!")
+    }
     const data = {
       user_name: userName.toLowerCase().trim(),
       password: userPassword.trim(),

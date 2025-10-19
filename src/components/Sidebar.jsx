@@ -70,10 +70,13 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
           <p className="text-white">Add Product</p>
         </div>
         {/* View All Products */}
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link
+          href={"/view-all-products"}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10 text-white"
+        >
           <MdProductionQuantityLimits size={18} className="text-white" />
-          <p className="text-white">View All Products</p>
-        </div>
+          View All Products
+        </Link>
       </div>
       {/* End Product Lists */}
       <h3 className="text-sm text-white/90 py-4 px-3 tracking-wider">

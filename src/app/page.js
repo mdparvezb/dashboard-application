@@ -6,6 +6,7 @@ import MobileMenu from "@/components/MobileMenu";
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
+import ViewAllProducts from "./view-all-products/page";
 
 export default function Home() {
   const [productModalOpen, setProductModalOpen] = useState(false);
@@ -13,18 +14,18 @@ export default function Home() {
   const [addUserModal, setAddUserModal] = useState(false);
   return (
     <>
-    <ToastContainer
-position="bottom-right"
-autoClose={3000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick={false}
-rtl={false}
-pauseOnFocusLoss={false}
-draggable
-pauseOnHover={false}
-theme="light"
-/>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <MobileMenu
         isMobileMenu={isMobileMenu}
         setIsMobileMenu={setIsMobileMenu}
