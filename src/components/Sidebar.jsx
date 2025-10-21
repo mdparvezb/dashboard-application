@@ -86,7 +86,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
       <div className="w-full flex flex-col gap-2 px-2">
         {/* View Data */}
         <Link
-          href={""}
+          href={"/view-row-hygiene"}
           className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
         >
           <IoEyeOutline size={18} className="text-white" />
@@ -99,10 +99,13 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Rehome Furniture</p>
         </Link>
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link
+          href={"view-ajs-wahla"}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+        >
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Ajs Wahla</p>
-        </div>
+        </Link>
         <Link
           href={"/view-expenditure-data"}
           className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"

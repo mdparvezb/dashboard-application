@@ -8,8 +8,8 @@ import { MdOutlineDelete } from "react-icons/md";
 import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 import Loader from "@/components/Loader";
 
-const ViewRehomeFurnitureData = () => {
-  const [rehomeFurnitureData, setRehomeFurnitureData] = useState([]);
+const ViewAjsWahlaData = () => {
+  const [ajsWahlaData, setAjsWahlaData] = useState([]);
 
   useEffect(() => {
     fetchProducts();
@@ -19,16 +19,15 @@ const ViewRehomeFurnitureData = () => {
     const response = await axios.get(
       "/api/salestransactions/getalltransactions"
     );
-    console.log(response.data.data);
     const filteredData = response.data.data.filter(
-      (trans) => trans.business_type === "rehome_furniture"
+      (trans) => trans.business_type === "ajs_wahla"
     );
     console.log(filteredData);
-    setRehomeFurnitureData(filteredData);
+    setAjsWahlaData(filteredData);
   }
   return (
-     <>
-          {!rehomeFurnitureData.length > 0 && <Loader />}
+    <>
+          {!ajsWahlaData.length > 0 && <Loader />}
     <div className="w-full flex justify-center pb-4">
       {/* Desktop Table */}
       <div className="w-full md:px-4 mt-10">
@@ -41,7 +40,7 @@ const ViewRehomeFurnitureData = () => {
             Back
           </Link>
           <h2 className="w-full text-center text-white font-bold text-3xl py-2 ">
-            Rehome Furniture Data
+            Row Hygiene Data
           </h2>
           <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
             <PiMicrosoftExcelLogoThin size={20} />
@@ -52,7 +51,7 @@ const ViewRehomeFurnitureData = () => {
         <div className="w-full h-screen overflow-auto">
           <table className="w-full max-h-screen overflow-auto">
             <thead>
-              <tr className="text-white/90 font-semibold bg-green-700">
+              <tr className="text-white/90 font-semibold bg-orange-600">
                 <th className="text-center border-1 border-white/60 py-2 px-1">
                   Sl No.
                 </th>
@@ -95,7 +94,7 @@ const ViewRehomeFurnitureData = () => {
               </tr>
             </thead>
             <tbody>
-              {rehomeFurnitureData.map((trans, index) => (
+              {ajsWahlaData.map((trans, index) => (
                 <tr key={trans._id} className="text-white/80 ">
                   <td className="text-center border-1 border-white/60 py-1 px-1">
                     {index + 1}
@@ -154,4 +153,4 @@ const ViewRehomeFurnitureData = () => {
   );
 };
 
-export default ViewRehomeFurnitureData;
+export default ViewAjsWahlaData;

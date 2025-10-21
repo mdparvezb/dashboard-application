@@ -1,35 +1,18 @@
 "use client";
-import AddUserModal from "@/components/AddUserModal";
-import DataEntry from "@/components/DataEntry";
-import DesktopMenu from "@/components/DesktopMenu";
-import MobileMenu from "@/components/MobileMenu";
-import Navbar from "@/components/Navbar";
+import AddUserModal from "./AddUserModal";
+import DataEntry from "./DataEntry";
+import DesktopMenu from "./DesktopMenu";
+import MobileMenu from "./MobileMenu";
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import ViewAllProducts from "./view-all-products/page";
-import HomePage from "@/components/HomePage";
+import Navbar from "./Navbar";
 
-export default function Home() {
-  // const [productModalOpen, setProductModalOpen] = useState(false);
-  // const [isMobileMenu, setIsMobileMenu] = useState(false);
-  // const [addUserModal, setAddUserModal] = useState(false);
+function HomePage() {
+  const [productModalOpen, setProductModalOpen] = useState(false);
+  const [isMobileMenu, setIsMobileMenu] = useState(false);
+  const [addUserModal, setAddUserModal] = useState(false);
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
-      <HomePage />
-
-      {/* <MobileMenu
+      <MobileMenu
         isMobileMenu={isMobileMenu}
         setIsMobileMenu={setIsMobileMenu}
         productModalOpen={productModalOpen}
@@ -56,7 +39,9 @@ export default function Home() {
             setAddUserModal={setAddUserModal}
           />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }
+
+export default HomePage;

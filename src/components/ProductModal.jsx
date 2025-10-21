@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const ProductModal = ({ setProductModalOpen }) => {
   const [productName, setProductName] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
   const [purchasePrice, setPurchasePrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [loading, setLoading] = useState(false);
   const inputData = [
     {
       labelName: "Product Name",
@@ -46,6 +48,7 @@ const ProductModal = ({ setProductModalOpen }) => {
     if (!productName || !purchaseDate || !purchasePrice || !quantity) {
       return toast.warning("All fields are required!");
     }
+setLoading(true);
     const data = {
       product_name: productName.trim(),
       purchase_date: purchaseDate.trim(),
@@ -55,6 +58,7 @@ const ProductModal = ({ setProductModalOpen }) => {
 
     const response = await axios.post("/api/product", data);
     setProductModalOpen(false);
+    setLoading(false);
     if (response.data.success) {
       toast.success(response.data.message);
     } else {
@@ -64,6 +68,7 @@ const ProductModal = ({ setProductModalOpen }) => {
 
   return (
     <>
+    {loading && <Loader />}
       <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none overflow-hidden">
         <div className="w-full md:max-w-[500px] flex flex-col bg-blue-900 py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-white font-bold text-center">

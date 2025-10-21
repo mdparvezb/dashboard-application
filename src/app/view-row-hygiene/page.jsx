@@ -6,26 +6,31 @@ import { FaArrowLeft } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
-import { QRCodeSVG } from "qrcode.react";
 import Loader from "@/components/Loader";
 
-const ViewAllProducts = () => {
-  const [productsData, setProductsData] = useState([]);
+const ViewRowHygieneData = () => {
+  const [rowHygieneData, setRowHygieneData] = useState([]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   async function fetchProducts() {
-    const response = await axios.get("/api/product");
-    setProductsData(response.data.data);
+    const response = await axios.get(
+      "/api/salestransactions/getalltransactions"
+    );
+    const filteredData = response.data.data.filter(
+      (trans) => trans.business_type === "row_hygiene"
+    );
+    console.log(filteredData);
+    setRowHygieneData(filteredData);
   }
   return (
     <>
-      {!productsData.length > 0 && <Loader />}
+      {!rowHygieneData.length > 0 && <Loader />}
       <div className="w-full flex justify-center pb-4">
         {/* Desktop Table */}
-        <div className="w-full md:px-8 mt-10">
+        <div className="w-full md:px-4 mt-10">
           <div className="w-full flex justify-between items-center">
             <Link
               href={"/"}
@@ -35,18 +40,18 @@ const ViewAllProducts = () => {
               Back
             </Link>
             <h2 className="w-full text-center text-white font-bold text-3xl py-2 ">
-              All Products
+              Row Hygiene Data
             </h2>
             <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
               <PiMicrosoftExcelLogoThin size={20} />
               Download
             </button>
           </div>
-          <div className="w-full">
-            {/* Table For Product View */}
-            <table className="w-full">
+          {/* Table For Product View */}
+          <div className="w-full h-screen overflow-auto">
+            <table className="w-full max-h-screen overflow-auto">
               <thead>
-                <tr className="text-white/90 font-semibold bg-orange-600">
+                <tr className="text-white/90 font-semibold bg-[purple]">
                   <th className="text-center border-1 border-white/60 py-2 px-1">
                     Sl No.
                   </th>
@@ -54,48 +59,82 @@ const ViewAllProducts = () => {
                     Product Name
                   </th>
                   <th className="text-center border-1 border-white/60 py-1 px-1">
-                    Purchase Price
-                  </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
                     Quantity
                   </th>
                   <th className="text-center border-1 border-white/60 py-1 px-1">
-                    Purchase Date
+                    Purchase Price
                   </th>
                   <th className="text-center border-1 border-white/60 py-1 px-1">
-                    Barcode
+                    Selling Price
                   </th>
                   <th className="text-center border-1 border-white/60 py-1 px-1">
-                    Actions
+                    Sales Date
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Total Purchase Price
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Total Selling Price
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Total Profit
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Payment Mode
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Business Type
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Created By
+                  </th>
+                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {productsData.map((product, index) => (
-                  <tr key={product._id} className="text-white/80 ">
+                {rowHygieneData.map((trans, index) => (
+                  <tr key={trans._id} className="text-white/80 ">
                     <td className="text-center border-1 border-white/60 py-1 px-1">
                       {index + 1}
                     </td>
                     <td className="text-center border-1 border-white/60 py-1 px-1">
-                      {product.product_name}
+                      {trans.produc_name}
                     </td>
                     <td className="text-center border-1 border-white/60 py-1 px-1">
-                      {product.purchase_price}
+                      {trans.quantity}
                     </td>
                     <td className="text-center border-1 border-white/60 py-1 px-1">
-                      {product.quantity}
+                      {trans.unit_purchase_price}
                     </td>
                     <td className="text-center border-1 border-white/60 py-1 px-1">
-                      {new Date(product.purchase_date).toLocaleString("en-US", {
+                      {trans.unit_selling_price}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {new Date(trans.createdAt).toLocaleString("default", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })}
                     </td>
-                    <td className="text-center border-1 border-white/60">
-                      <div className="overflow-hidden flex justify-center p-1">
-                        <QRCodeSVG value={product.product_name} size={80} />
-                      </div>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.total_purchase_price}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.total_selling_price}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.total_profit}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.payment_mode}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.business_type}
+                    </td>
+                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                      {trans.user_name}
                     </td>
                     <td className="text-center border-1 border-white/60 py-1 px-1">
                       <div className="w-full flex justify-center items-center gap-2">
@@ -114,4 +153,4 @@ const ViewAllProducts = () => {
   );
 };
 
-export default ViewAllProducts;
+export default ViewRowHygieneData;
