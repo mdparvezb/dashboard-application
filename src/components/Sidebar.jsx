@@ -85,22 +85,31 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
       {/* View Data Entries Starts Here */}
       <div className="w-full flex flex-col gap-2 px-2">
         {/* View Data */}
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link
+          href={""}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+        >
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Row Hygiene</p>
-        </div>
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        </Link>
+        <Link
+          href={"/view-rehome-furniture"}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+        >
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Rehome Furniture</p>
-        </div>
+        </Link>
         <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Ajs Wahla</p>
         </div>
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link
+          href={"/view-expenditure-data"}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+        >
           <IoEyeOutline size={18} className="text-white" />
           <p className="text-white">Expenditure</p>
-        </div>
+        </Link>
       </div>
       {/* View Data Entries Ends Here*/}
 

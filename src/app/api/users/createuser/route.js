@@ -9,6 +9,15 @@ export async function POST(request) {
   const data = await request.json();
   const hashedPassword = await bcrypt.hash(data.password, 10);
   try {
+    // Check if users exist
+
+    const user = await userModel.findOne({ user_name: data.user_name });
+    if (user) {
+      return NextResponse.json({
+        message: "User Already Exist",
+        success: false,
+      });
+    }
     const response = await userModel.create({
       user_name: data.user_name,
       password: hashedPassword,

@@ -8,16 +8,19 @@ import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 
-const ViewAllProducts = () => {
-  const [productsData, setProductsData] = useState([]);
+const ViewRehomeFurnitureData = () => {
+  const [rehomeFurnitureData, setRehomeFurnitureData] = useState([]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   async function fetchProducts() {
-    const response = await axios.get("/api/product");
-    setProductsData(response.data.data);
+    const response = await axios.get("/api/salestransactions/getalltransactions");
+    console.log(response.data.data)
+    const filteredData = response.data.data.filter((trans) => trans.business_type === "rehome_furniture")
+    console.log(filteredData)
+    setRehomeFurnitureData(filteredData);
   }
   return (
     <div className="w-full flex justify-center pb-4">
@@ -32,7 +35,7 @@ const ViewAllProducts = () => {
             Back
           </Link>
           <h2 className="w-full text-center text-white font-bold text-3xl py-2 ">
-            All Products
+            Rehome Furniture Data
           </h2>
           <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
             <PiMicrosoftExcelLogoThin size={20} />
@@ -42,24 +45,21 @@ const ViewAllProducts = () => {
         {/* Table For Product View */}
         <table className="w-full h-screen overflow-y-scroll">
           <thead>
-            <tr className="text-white/90 font-semibold bg-orange-600">
+            <tr className="text-white/90 font-semibold bg-black/70">
               <th className="text-center border-1 border-white/60 py-2 px-1">
                 Sl No.
               </th>
               <th className="text-center border-1 border-white/60 py-1 px-1">
-                Product Name
+                Expenses Category
               </th>
               <th className="text-center border-1 border-white/60 py-1 px-1">
-                Purchase Price
+                Description
               </th>
               <th className="text-center border-1 border-white/60 py-1 px-1">
-                Quantity
+                Amount
               </th>
               <th className="text-center border-1 border-white/60 py-1 px-1">
-                Purchase Date
-              </th>
-              <th className="text-center border-1 border-white/60 py-1 px-1">
-                Barcode
+                Payment Mode
               </th>
               <th className="text-center border-1 border-white/60 py-1 px-1">
                 Actions
@@ -67,39 +67,28 @@ const ViewAllProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {productsData.map((product, index) => (
-              <tr key={product._id} className="text-white/80 ">
+            {rehomeFurnitureData.map((trans, index) => (
+              <tr key={trans._id} className="text-white/80 ">
                 <td className="text-center border-1 border-white/60 py-1 px-1">
                   {index + 1}
                 </td>
                 <td className="text-center border-1 border-white/60 py-1 px-1">
-                  {product.product_name}
+                  {trans.expense_category}
                 </td>
                 <td className="text-center border-1 border-white/60 py-1 px-1">
-                  {product.purchase_price}
+                  {trans.description}
                 </td>
                 <td className="text-center border-1 border-white/60 py-1 px-1">
-                  {product.quantity}
+                  {trans.amount}
                 </td>
                 <td className="text-center border-1 border-white/60 py-1 px-1">
-                  {new Date(product.purchase_date).toLocaleString("en-US", {
+                  {new Date(trans.createdAt).toLocaleString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
                   })}
                 </td>
-                <td className="text-center border-1 border-white/60">
-                  <div className="flex justify-center">
-                    <Barcode
-                      value={product.product_name}
-                      width={2}
-                      height={50}
-                      displayValue={false}
-                      background="transparent"
-                      lineColor={"rgba(255, 255, 255, 0.9)"}
-                    />
-                  </div>
-                </td>
+
                 <td className="text-center border-1 border-white/60 py-1 px-1">
                   <div className="w-full flex justify-center items-center gap-2">
                     <BiEdit size={22} className="text-white/80" />
@@ -115,4 +104,4 @@ const ViewAllProducts = () => {
   );
 };
 
-export default ViewAllProducts;
+export default ViewRehomeFurnitureData;

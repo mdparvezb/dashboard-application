@@ -21,6 +21,11 @@ Text Secondary: #616161 */
 * {
   box-sizing: border-box;
 }
+
+html {
+  width: 100%;
+}
+
 body {
   width: 100%;
   height: 100vh;

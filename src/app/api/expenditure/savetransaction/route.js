@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import expenditureModel from "../../../../lib/models/expenditureModel";
+import expenditureModel from "../../../../../lib/models/expenditureModel";
 
-const { ConnectDB } = require("../../../../lib/config/db");
+const { ConnectDB } = require("../../../../../lib/config/db");
 
 ConnectDB();
 

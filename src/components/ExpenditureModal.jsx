@@ -52,7 +52,7 @@ const ExpenditureModal = ({
       payment_mode: paymentMode,
     };
 
-    const response = await axios.post("/api/expendituretransaction", data);
+    const response = await axios.post("/api/expenditure/savetransaction", data);
     setExpenditureModalOpen(false);
     if (response.data.success) {
       toast.success(response.data.message);

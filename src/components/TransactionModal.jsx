@@ -53,7 +53,7 @@ const TransactionModal = ({
       return toast.warning("All fields are required!");
     }
     const data = {
-      busniess_type: businessType,
+      business_type: businessType,
       user_name: "Default",
       produc_name: productName.trim(),
       quantity: Number(quantity),
