@@ -34,7 +34,7 @@ const ViewExpenditureData = () => {
               Back
             </Link>
             <h2 className="w-full text-center text-white font-bold text-3xl py-2 ">
-              All Products
+              All Expenditure
             </h2>
             <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
               <PiMicrosoftExcelLogoThin size={20} />

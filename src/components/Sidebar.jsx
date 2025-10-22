@@ -34,7 +34,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
         </Link>
       </div>
       {/* End Home and Dashboard Items */}
-      <h3 className="text-sm text-white/90 py-4 px-3 tracking-wider">Users</h3>
+      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">Users</h3>
       {/* Start User Lists */}
       <div className="w-full flex flex-col gap-2 px-2">
         <div
@@ -53,7 +53,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
         </div>
       </div>
       {/* End User Lists */}
-      <h3 className="text-sm text-white/90 py-4 px-3 tracking-wider">
+      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
         Products
       </h3>
       {/* Start Product Lists */}
@@ -79,7 +79,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
         </Link>
       </div>
       {/* End Product Lists */}
-      <h3 className="text-sm text-white/90 py-4 px-3 tracking-wider">
+      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
         View Data Entries
       </h3>
       {/* View Data Entries Starts Here */}

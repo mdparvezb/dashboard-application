@@ -44,62 +44,65 @@ const ViewAllProducts = () => {
           </div>
           <div className="w-full">
             {/* Table For Product View */}
-            <table className="w-full">
+            <table className="w-full bg-gray-50">
               <thead>
                 <tr className="text-white/90 font-semibold bg-orange-600">
-                  <th className="text-center border-1 border-white/60 py-2 px-1">
+                  <th className="text-center border-1 border-orange-300 py-2 px-1">
                     Sl No.
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Product Name
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Purchase Price
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Quantity
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Purchase Date
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Barcode
                   </th>
-                  <th className="text-center border-1 border-white/60 py-1 px-1">
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {productsData.map((product, index) => (
-                  <tr key={product._id} className="text-white/80 ">
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                  <tr key={product._id} className="text-black ">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       {index + 1}
                     </td>
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       {product.product_name}
                     </td>
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       {product.purchase_price}
                     </td>
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                      {product.business_type || "NA"}
+                    </td>
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       {product.quantity}
                     </td>
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       {new Date(product.purchase_date).toLocaleString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })}
                     </td>
-                    <td className="text-center border-1 border-white/60">
+                    <td className="text-center border-1 border-orange-300">
                       <div className="overflow-hidden flex justify-center p-1">
                         <QRCodeSVG value={product.product_name} size={80} />
                       </div>
                     </td>
-                    <td className="text-center border-1 border-white/60 py-1 px-1">
+                    <td className="text-center border-1 border-orange-300 py-1 px-1">
                       <div className="w-full flex justify-center items-center gap-2">
-                        <BiEdit size={22} className="text-white/80" />
+                        <BiEdit size={22} className="text-blue-600" />
                         <MdOutlineDelete size={25} className="text-red-600" />
                       </div>
                     </td>

@@ -4,10 +4,7 @@ import { useState } from "react";
 import TransactionModal from "./TransactionModal";
 import ProductModal from "./ProductModal";
 
-const DataEntry = ({
-  productModalOpen,
-  setProductModalOpen,
-}) => {
+const DataEntry = ({ productModalOpen, setProductModalOpen }) => {
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
   const [expenditureModalOpen, setExpenditureModalOpen] = useState(false);
   const [businessType, setBusinessType] = useState("");
@@ -57,19 +54,21 @@ const DataEntry = ({
 
   return (
     <>
-      <div className="w-full h-full flex-col md:w-[78%] items-center justify-center overflow-hidden">
+      <div className="w-full h-full pb-4 flex-col md:w-[78%] items-center justify-center overflow-auto">
         {/* Item Selling Menus */}
-        <div className="w-full">
-          <h1 className="text-3xl w-full text-center font-bold bg-green-500 text-white"></h1>
+        <div className="w-full mt-10">
+          <h1 className="text-3xl w-full text-center font-bold text-shadow-black text-shadow-xs">
+            Add Transactions
+          </h1>
         </div>
-        <div className="flex flex-col gap-4 justify-center md:px-10 px-4 mt-10">
+        <div className="w-full grid grid-cols-1 md:grid-cols-4  gap-4 justify-center md:px-8 px-4 mt-6">
           {homePageButtons.map((btn, index) => (
             <button
               key={index}
               onClick={() => {
                 btn.action(btn.type, btn.name);
               }}
-              className={`px-8 py-4 rounded-full text-white cursor-pointer ${btn.bg} tracking-wider shadow-sm hover:opacity-90 hover:scale-105 hover:shadow-xl transition-all duration-300`}
+              className={`w-full h-60 md:h-80 py-4 rounded-md text-white font-semibold tracking-wider cursor-pointer ${btn.bg} shadow-md hover:opacity-90 hover:-translate-y-2 active:-translate-y-2 hover:shadow-3xl active:shadow-3xl transition-all duration-300`}
             >
               {btn.name}
             </button>
