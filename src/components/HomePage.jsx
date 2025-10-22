@@ -22,9 +22,10 @@ function HomePage() {
 
       {addUserModal && <AddUserModal setAddUserModal={setAddUserModal} />}
 
-      <div className="w-full flex h-screen justify-center overflow-hidden">
+      <div className="w-full flex justify-center overflow-hidden">
         <DesktopMenu
           productModalOpen={productModalOpen}
+          addUserModal={addUserModal}
           setProductModalOpen={setProductModalOpen}
           setIsMobileMenu={setIsMobileMenu}
           setAddUserModal={setAddUserModal}

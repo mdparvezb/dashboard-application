@@ -1,6 +1,6 @@
 "use client";
 import ExpenditureModal from "./ExpenditureModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TransactionModal from "./TransactionModal";
 import ProductModal from "./ProductModal";
 
@@ -9,6 +9,7 @@ const DataEntry = ({ productModalOpen, setProductModalOpen }) => {
   const [expenditureModalOpen, setExpenditureModalOpen] = useState(false);
   const [businessType, setBusinessType] = useState("");
   const [businessName, setBusinessName] = useState("");
+
   const homePageButtons = [
     {
       name: "Rehome Furniture",
@@ -54,14 +55,14 @@ const DataEntry = ({ productModalOpen, setProductModalOpen }) => {
 
   return (
     <>
-      <div className="w-full h-full pb-4 flex-col md:w-[78%] items-center justify-center overflow-auto">
+      <div className="w-full h-full pb-4 flex-col md:w-[78%] items-center justify-center overflow-hidden">
         {/* Item Selling Menus */}
         <div className="w-full mt-10">
           <h1 className="text-3xl w-full text-center font-bold text-shadow-black text-shadow-xs">
             Add Transactions
           </h1>
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-4  gap-4 justify-center md:px-8 px-4 mt-6">
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 justify-center md:px-8 px-4 mt-6">
           {homePageButtons.map((btn, index) => (
             <button
               key={index}
@@ -80,6 +81,7 @@ const DataEntry = ({ productModalOpen, setProductModalOpen }) => {
           businessName={businessName}
           businessType={businessType}
           setTransactionModalOpen={setTransactionModalOpen}
+          transactionModalOpen={transactionModalOpen}
         />
       )}
       {expenditureModalOpen && (

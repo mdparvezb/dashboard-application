@@ -28,9 +28,12 @@ html {
 
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #fff;
-  position: relative;
+}
+
+.remove-scroll {
+  overflow: hidden;
 }
 
 /* Product View Table CSS
@@ -46,3 +49,5 @@ td {
   padding: 10px 20px;
   color: white;
 } */
+
+/* Scroll Remove */

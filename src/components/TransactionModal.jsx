@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ const TransactionModal = ({
   businessName,
   businessType,
   setTransactionModalOpen,
+  transactionModalOpen,
 }) => {
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -47,6 +48,7 @@ const TransactionModal = ({
       className: "appearance-none",
     },
   ];
+
   // Transaction Save Handler
   async function transactionSaveHandler(e) {
     e.preventDefault();
@@ -57,7 +59,7 @@ const TransactionModal = ({
     const data = {
       business_type: businessType,
       user_name: "Default",
-      produc_name: productName.trim(),
+      product_name: productName.trim(),
       quantity: Number(quantity),
       unit_purchase_price: Number(unitPurchasePrice),
       unit_selling_price: Number(unitSellingPrice),
@@ -73,7 +75,6 @@ const TransactionModal = ({
       "/api/transactions/savetransaction",
       data
     );
-    console.log(response.data.data);
     setTransactionModalOpen(false);
     setLoading(false);
     if (response.data.success) {
@@ -86,7 +87,7 @@ const TransactionModal = ({
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none transition-opacity duration-500">
+      <div className="w-full h-screen bg-black/80 px-6 backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none transition-opacity duration-500">
         <div className="w-full md:max-w-[500px] flex flex-col bg-[#191970] py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-white font-bold text-center">
             {businessName}

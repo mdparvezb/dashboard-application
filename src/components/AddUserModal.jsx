@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ const AddUserModal = ({ setAddUserModal }) => {
   const [userPassword, setUserPassword] = useState("");
   const [userRole, setUserRole] = useState("Normal");
   const [loading, setLoading] = useState(false);
+
   const inputData = [
     {
       labelName: "User Name",
@@ -53,7 +54,7 @@ const AddUserModal = ({ setAddUserModal }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none overflow-hidden">
+      <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none overflow-hidden">
         <div className="w-full md:max-w-[500px] flex flex-col bg-purple-900 py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-white font-bold text-center">
             Add New User

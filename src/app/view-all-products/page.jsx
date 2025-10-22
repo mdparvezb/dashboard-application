@@ -24,17 +24,16 @@ const ViewAllProducts = () => {
     <>
       {!productsData.length > 0 && <Loader />}
       <div className="w-full flex justify-center pb-4">
-        {/* Desktop Table */}
-        <div className="w-full md:px-8 mt-10">
-          <div className="w-full flex justify-between items-center">
+        <div className="w-full px-2 md:px-4 mt-10">
+          <div className="w-full flex flex-col md:flex-row justify-between items-center gap-2">
             <Link
               href={"/"}
-              className="flex gap-2 items-center px-4 py-2 bg-white/90 hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white text-black rounded-sm transition-all duration-300"
+              className="flex gap-2 items-center px-4 py-2 bg-blue-800/90 hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white text-white rounded-sm transition-all duration-300"
             >
               <FaArrowLeft size={16} />
               Back
             </Link>
-            <h2 className="w-full text-center text-white font-bold text-3xl py-2 ">
+            <h2 className="w-full text-center text-blue-600 font-bold text-3xl py-2 text-shadow-xs ">
               All Products
             </h2>
             <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
@@ -42,7 +41,8 @@ const ViewAllProducts = () => {
               Download
             </button>
           </div>
-          <div className="w-full">
+          {/* Desktop Table */}
+          <div className="w-full hidden md:block">
             {/* Table For Product View */}
             <table className="w-full bg-gray-50">
               <thead>
@@ -55,6 +55,9 @@ const ViewAllProducts = () => {
                   </th>
                   <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Purchase Price
+                  </th>
+                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                    Business Type
                   </th>
                   <th className="text-center border-1 border-orange-300 py-1 px-1">
                     Quantity
@@ -110,6 +113,75 @@ const ViewAllProducts = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+          {/* Desktop Table Ends Here*/}
+          {/* Mobile Table Starts Here*/}
+
+          <div className="w-full md:hidden flex flex-col justify-center gap-4 mt-4">
+            {/* Table Main */}
+            {productsData.map((product, index) => (
+              <div
+                key={product._id}
+                className="w-full bg-[bisque]/50 border-1 border-orange-200 shadow-md"
+              >
+                {/* Mobile Table Headings and Data */}
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Sl No.</p>
+                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {index + 1}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Product Name</p>
+                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {product.product_name}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Purchase Price</p>
+                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {product.purchase_price}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Business Type</p>
+                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {product.business_type || "NA"}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Quantity</p>
+                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {product.quantity}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Purchase Date</p>
+                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    {new Date(product.purchase_date).toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Barcode</p>
+                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    <QRCodeSVG value={product.product_name} size={80} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Actions</p>
+                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                    <div className="w-full flex items-center gap-4">
+                      <BiEdit size={22} className="text-blue-600" />
+                      <MdOutlineDelete size={25} className="text-red-600" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
