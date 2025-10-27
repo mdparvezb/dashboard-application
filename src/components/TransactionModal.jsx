@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -72,7 +72,7 @@ const TransactionModal = ({
     };
 
     const response = await axios.post(
-      "/api/transactions/savetransaction",
+      "/api/salestransactions/savetransaction",
       data
     );
     setTransactionModalOpen(false);
