@@ -1,4 +1,10 @@
 "use client";
+import BusinessTypeSalesByMonth from "@/components/charts/BusinessTypeSalesByMonth";
+import ExpenditureByMonth from "@/components/charts/ExpenditureByMonth";
+import ExpenditureByYear from "@/components/charts/ExpenditureByYear";
+import OverallProfitByMonth from "@/components/charts/OverallProfitByMonth";
+import OverallSalesByMonth from "@/components/charts/OverallSalesByMonth";
+import PaymentModeWisePieChart from "@/components/charts/PaymentModeWisePieChart";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -54,15 +60,6 @@ const Dashboard = () => {
     setAjsWahlaData(ajsWahla);
     return setTransactionData(salesResponse.data.data);
   }
-
-  // transactionData.map((item) => {
-  //   const data = new Date(item.createdAt).toLocaleString("default", {
-  //     day: "numeric",
-  //     month: "short",
-  //     year: "numeric",
-  //   });
-  //   console.log(data);
-  // });
 
   // Total Calculation Function
   function totalCalculateFn(aray, columnName) {
@@ -185,19 +182,101 @@ const Dashboard = () => {
       total,
     })
   );
-// Starts from Here 24.10.2025
-  const expenditureByYear = "a";
-  const businessWiseSales = "a";
-  const paymentModeWiseSales = "a";
-  const profitByMonth = "a";
+
+  // Expenditure By Year
+  const expenditureByYearTemp = expenditureData.reduce((acc, item) => {
+    // Get month name only (e.g. "Jan", "Feb")
+    const year = new Date(item.createdAt).toLocaleString("default", {
+      year: "numeric",
+    });
+    // Sum total sales for that month
+    acc[year] = (acc[year] || 0) + (item.amount || 0);
+    return acc;
+  }, {});
+  // Over All Entries to Object
+  const expenditureByYear = Object.entries(expenditureByYearTemp).map(
+    ([year, total]) => ({
+      year,
+      total,
+    })
+  );
+
+  // Total Sales by Business Type
+  const businessWiseSalesTemp = transactionData.reduce((acc, item) => {
+    const month = new Date(item.createdAt).toLocaleString("default", {
+      month: "short",
+    });
+    const type = item.business_type || "NA";
+
+    if (!acc[month]) acc[month] = {};
+    if (!acc[month][type]) acc[month][type] = 0;
+
+    acc[month][type] += item.total_selling_price || 0;
+    return acc;
+  }, {});
+
+  // Convert to table-like array
+  const businessWiseSales = Object.entries(businessWiseSalesTemp).map(
+    ([month, types]) => {
+      const total = Object.values(types).reduce((sum, v) => sum + v, 0);
+      return { month, ...types, total };
+    }
+  );
+
+  // Total Sales by Payment Mode
+  const paymentModeWiseSalesTemp = transactionData.reduce((acc, item) => {
+    // Get Payment Mode
+    const mode = item.payment_mode || "NA";
+    // Sum total sales by Payment Mode
+    acc[mode] = (acc[mode] || 0) + (item.total_selling_price || 0);
+    return acc;
+  }, {});
+  // Over All Entries to Object
+  const paymentModeWiseSales = Object.entries(paymentModeWiseSalesTemp).map(
+    ([mode, total]) => ({
+      mode,
+      total,
+    })
+  );
+
+  // Profit By Month
+  const profitByMonthTemp = transactionData.reduce((acc, item) => {
+    // Get month name only (e.g. "Jan", "Feb")
+    const month = new Date(item.createdAt).toLocaleString("default", {
+      month: "short",
+    });
+    // Sum total sales for that month
+    acc[month] = (acc[month] || 0) + (item.total_profit || 0);
+    return acc;
+  }, {});
+  // Over All Entries to Object
+  const profitByMonth = Object.entries(profitByMonthTemp).map(
+    ([month, total]) => ({
+      month,
+      total,
+    })
+  );
 
   return (
-    <div>
-      <h2>{overAllPurchasePrice}</h2>
-      <h2>{overAllSellingPrice}</h2>
-      <h2>{overAllTotalProfit}</h2>
-      <h2>{overAllMargin}%</h2>
-      <button className="px-4 py-2 bg-red-600 text-white">Calculate</button>
+    <div className="p-10">
+      {overeAllSalesByMonth.length > 0 && (
+        <OverallSalesByMonth overeAllSalesByMonth={overeAllSalesByMonth} />
+      )}
+      {expenditureByMonth.length > 0 && (
+        <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />
+      )}
+      {expenditureByYear.length > 0 && (
+        <ExpenditureByYear expenditureByYear={expenditureByYear} />
+      )}
+      {businessWiseSales.length > 0 && (
+        <BusinessTypeSalesByMonth businessWiseSales={businessWiseSales} />
+      )}
+      {profitByMonth.length > 0 && (
+        <OverallProfitByMonth profitByMonth={profitByMonth} />
+      )}
+      {paymentModeWiseSales.length > 0 && (
+        <PaymentModeWisePieChart paymentModeWiseSales={paymentModeWiseSales} />
+      )}
     </div>
   );
 };
