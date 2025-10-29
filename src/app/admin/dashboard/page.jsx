@@ -258,7 +258,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="p-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 ld:grid-cols-3 gap-2 px-4 md:p-10 bg-[#dfdfdf]">
       {overeAllSalesByMonth.length > 0 && (
         <OverallSalesByMonth overeAllSalesByMonth={overeAllSalesByMonth} />
       )}

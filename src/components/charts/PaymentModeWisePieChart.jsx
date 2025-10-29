@@ -9,10 +9,10 @@ import {
 } from "recharts";
 
 const PaymentModeWisePieChart = ({ paymentModeWiseSales }) => {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#0088FE", "#00C49F"];
   return (
-    <div className="w-full">
-      <h2>Payment Mode Wise</h2>
+    <div className="w-full rounded-md px-2 py-1 flex flex-col items center bg-white shadow-md">
+      <h2 className="text-center font-semibold text-md">Payment Mode Wise</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
