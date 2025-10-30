@@ -1,10 +1,16 @@
 "use client";
+import AjsWahlaInsights from "@/components/charts/AjsWahlaInsights";
 import BusinessTypeSalesByMonth from "@/components/charts/BusinessTypeSalesByMonth";
+import { DashboardNavbar } from "@/components/charts/DashboardNavbar";
 import ExpenditureByMonth from "@/components/charts/ExpenditureByMonth";
 import ExpenditureByYear from "@/components/charts/ExpenditureByYear";
+import OverallInsights from "@/components/charts/OverallInsights";
 import OverallProfitByMonth from "@/components/charts/OverallProfitByMonth";
 import OverallSalesByMonth from "@/components/charts/OverallSalesByMonth";
 import PaymentModeWisePieChart from "@/components/charts/PaymentModeWisePieChart";
+import RehomeFurnitureInsights from "@/components/charts/RehomeFurnitureInsights";
+import RowHygieneInsights from "@/components/charts/RowHygieneInsights";
+import Loader from "@/components/Loader";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -46,16 +52,16 @@ const Dashboard = () => {
     setExpenditureData(expenditureResponse.data.data);
 
     const rehomeFurniture = salesResponse.data.data.filter(
-      (trans) => TransitionEvent.business_type === "rehome_furniture"
+      (trans) => trans.business_type === "rehome_furniture"
     );
     setRehomeFurnitureData(rehomeFurniture);
 
     const rowHygiene = salesResponse.data.data.filter(
-      (trans) => TransitionEvent.business_type === "row_hygiene"
+      (trans) => trans.business_type === "row_hygiene"
     );
     setRowHygieneData(rowHygiene);
     const ajsWahla = salesResponse.data.data.filter(
-      (trans) => TransitionEvent.business_type === "ajs_wahla"
+      (trans) => trans.business_type === "ajs_wahla"
     );
     setAjsWahlaData(ajsWahla);
     return setTransactionData(salesResponse.data.data);
@@ -79,12 +85,17 @@ const Dashboard = () => {
     totalCalculateFn(transactionData, "total_selling_price")
   );
 
+  // Total Expenditure
+  const overAllExpenditure = Math.round(
+    totalCalculateFn(expenditureData, "amount")
+  );
+
   const overAllTotalProfit = Math.round(
     totalCalculateFn(transactionData, "total_profit")
   );
 
   // Net Profit (Profit - Expenditure)
-  const netProfit = (overAllTotalProfit || 0) - (expenditureData || 0);
+  const netProfit = (overAllTotalProfit || 0) - (overAllExpenditure || 0);
 
   const overAllMargin = Math.round(
     (((overAllSellingPrice || 0) - (overAllPurchasePrice || 0)) /
@@ -256,28 +267,72 @@ const Dashboard = () => {
       total,
     })
   );
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 ld:grid-cols-3 gap-2 px-4 md:p-10 bg-[#dfdfdf]">
-      {overeAllSalesByMonth.length > 0 && (
-        <OverallSalesByMonth overeAllSalesByMonth={overeAllSalesByMonth} />
-      )}
-      {expenditureByMonth.length > 0 && (
-        <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />
-      )}
-      {expenditureByYear.length > 0 && (
-        <ExpenditureByYear expenditureByYear={expenditureByYear} />
-      )}
-      {businessWiseSales.length > 0 && (
-        <BusinessTypeSalesByMonth businessWiseSales={businessWiseSales} />
-      )}
-      {profitByMonth.length > 0 && (
-        <OverallProfitByMonth profitByMonth={profitByMonth} />
-      )}
-      {paymentModeWiseSales.length > 0 && (
-        <PaymentModeWisePieChart paymentModeWiseSales={paymentModeWiseSales} />
-      )}
+    <>
+    {!transactionData.length > 0 && <Loader />}
+    <div className="w-full bg-blue-600/30 overflow-auto">
+      <DashboardNavbar />
+
+      <div className="w-full px-4 md:px-6 py-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          {rehomeFurnitureData.length > 0 && (
+            <RehomeFurnitureInsights
+              RFPurchasePrice={RFPurchasePrice}
+              RFSellingPrice={RFSellingPrice}
+              RFTotalProfit={RFTotalProfit}
+              RFMargin={RFMargin}
+            />
+          )}
+          {rowHygieneData.length > 0 && (
+            <RowHygieneInsights
+              RHPurchasePrice={RHPurchasePrice}
+              RHSellingPrice={RHSellingPrice}
+              RHTotalProfit={RHTotalProfit}
+              RHMargin={RHMargin}
+            />
+          )}
+          {rowHygieneData.length > 0 && (
+            <AjsWahlaInsights
+              AWPurchasePrice={AWPurchasePrice}
+              AWSellingPrice={AWSellingPrice}
+              AWTotalProfit={AWTotalProfit}
+              AWMargin={AWMargin}
+            />
+          )}
+          {rowHygieneData.length > 0 && (
+            <OverallInsights
+              overAllPurchasePrice={overAllPurchasePrice}
+              overAllSellingPrice={overAllSellingPrice}
+              netProfit={netProfit}
+              overAllExpenditure={overAllExpenditure}
+            />
+          )}
+        </div>
+        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-4 ">
+          {overeAllSalesByMonth.length > 0 && (
+            <OverallSalesByMonth overeAllSalesByMonth={overeAllSalesByMonth} />
+          )}
+          {expenditureByMonth.length > 0 && (
+            <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />
+          )}
+          {expenditureByYear.length > 0 && (
+            <ExpenditureByYear expenditureByYear={expenditureByYear} />
+          )}
+          {businessWiseSales.length > 0 && (
+            <BusinessTypeSalesByMonth businessWiseSales={businessWiseSales} />
+          )}
+          {profitByMonth.length > 0 && (
+            <OverallProfitByMonth profitByMonth={profitByMonth} />
+          )}
+          {paymentModeWiseSales.length > 0 && (
+            <PaymentModeWisePieChart
+              paymentModeWiseSales={paymentModeWiseSales}
+            />
+          )}
+        </div>
+      </div>
     </div>
+    </>
   );
 };
 
