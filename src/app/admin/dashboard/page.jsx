@@ -1,7 +1,7 @@
 "use client";
 import AjsWahlaInsights from "@/components/charts/AjsWahlaInsights";
 import BusinessTypeSalesByMonth from "@/components/charts/BusinessTypeSalesByMonth";
-import { DashboardNavbar } from "@/components/charts/DashboardNavbar";
+import DashboardNavbar from "@/components/charts/DashboardNavbar";
 import ExpenditureByMonth from "@/components/charts/ExpenditureByMonth";
 import ExpenditureByYear from "@/components/charts/ExpenditureByYear";
 import OverallInsights from "@/components/charts/OverallInsights";
@@ -269,69 +269,71 @@ const Dashboard = () => {
   );
   return (
     <>
-    {!transactionData.length > 0 && <Loader />}
-    <div className="w-full bg-blue-600/30 overflow-auto">
-      <DashboardNavbar />
+      {!transactionData.length > 0 && <Loader />}
+      <div className="w-full bg-blue-600/30 overflow-auto">
+        <DashboardNavbar />
 
-      <div className="w-full px-4 md:px-6 py-4">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {rehomeFurnitureData.length > 0 && (
-            <RehomeFurnitureInsights
-              RFPurchasePrice={RFPurchasePrice}
-              RFSellingPrice={RFSellingPrice}
-              RFTotalProfit={RFTotalProfit}
-              RFMargin={RFMargin}
-            />
-          )}
-          {rowHygieneData.length > 0 && (
-            <RowHygieneInsights
-              RHPurchasePrice={RHPurchasePrice}
-              RHSellingPrice={RHSellingPrice}
-              RHTotalProfit={RHTotalProfit}
-              RHMargin={RHMargin}
-            />
-          )}
-          {rowHygieneData.length > 0 && (
-            <AjsWahlaInsights
-              AWPurchasePrice={AWPurchasePrice}
-              AWSellingPrice={AWSellingPrice}
-              AWTotalProfit={AWTotalProfit}
-              AWMargin={AWMargin}
-            />
-          )}
-          {rowHygieneData.length > 0 && (
-            <OverallInsights
-              overAllPurchasePrice={overAllPurchasePrice}
-              overAllSellingPrice={overAllSellingPrice}
-              netProfit={netProfit}
-              overAllExpenditure={overAllExpenditure}
-            />
-          )}
-        </div>
-        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-4 ">
-          {overeAllSalesByMonth.length > 0 && (
-            <OverallSalesByMonth overeAllSalesByMonth={overeAllSalesByMonth} />
-          )}
-          {expenditureByMonth.length > 0 && (
-            <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />
-          )}
-          {expenditureByYear.length > 0 && (
-            <ExpenditureByYear expenditureByYear={expenditureByYear} />
-          )}
-          {businessWiseSales.length > 0 && (
-            <BusinessTypeSalesByMonth businessWiseSales={businessWiseSales} />
-          )}
-          {profitByMonth.length > 0 && (
-            <OverallProfitByMonth profitByMonth={profitByMonth} />
-          )}
-          {paymentModeWiseSales.length > 0 && (
-            <PaymentModeWisePieChart
-              paymentModeWiseSales={paymentModeWiseSales}
-            />
-          )}
+        <div className="w-full px-4 md:px-6 py-4">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            {rehomeFurnitureData.length > 0 && (
+              <RehomeFurnitureInsights
+                RFPurchasePrice={RFPurchasePrice}
+                RFSellingPrice={RFSellingPrice}
+                RFTotalProfit={RFTotalProfit}
+                RFMargin={RFMargin}
+              />
+            )}
+            {rowHygieneData.length > 0 && (
+              <RowHygieneInsights
+                RHPurchasePrice={RHPurchasePrice}
+                RHSellingPrice={RHSellingPrice}
+                RHTotalProfit={RHTotalProfit}
+                RHMargin={RHMargin}
+              />
+            )}
+            {rowHygieneData.length > 0 && (
+              <AjsWahlaInsights
+                AWPurchasePrice={AWPurchasePrice}
+                AWSellingPrice={AWSellingPrice}
+                AWTotalProfit={AWTotalProfit}
+                AWMargin={AWMargin}
+              />
+            )}
+            {rowHygieneData.length > 0 && (
+              <OverallInsights
+                overAllPurchasePrice={overAllPurchasePrice}
+                overAllSellingPrice={overAllSellingPrice}
+                netProfit={netProfit}
+                overAllExpenditure={overAllExpenditure}
+              />
+            )}
+          </div>
+          <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-4 ">
+            {overeAllSalesByMonth.length > 0 && (
+              <OverallSalesByMonth
+                overeAllSalesByMonth={overeAllSalesByMonth}
+              />
+            )}
+            {expenditureByMonth.length > 0 && (
+              <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />
+            )}
+            {expenditureByYear.length > 0 && (
+              <ExpenditureByYear expenditureByYear={expenditureByYear} />
+            )}
+            {businessWiseSales.length > 0 && (
+              <BusinessTypeSalesByMonth businessWiseSales={businessWiseSales} />
+            )}
+            {profitByMonth.length > 0 && (
+              <OverallProfitByMonth profitByMonth={profitByMonth} />
+            )}
+            {paymentModeWiseSales.length > 0 && (
+              <PaymentModeWisePieChart
+                paymentModeWiseSales={paymentModeWiseSales}
+              />
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
