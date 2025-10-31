@@ -54,7 +54,7 @@ const AddUserModal = ({ setAddUserModal }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none overflow-hidden">
+      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none overflow-hidden">
         <div className="w-full md:max-w-[500px] flex flex-col bg-purple-900 py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-white font-bold text-center">
             Add New User
@@ -71,7 +71,7 @@ const AddUserModal = ({ setAddUserModal }) => {
                   type={item.inputType}
                   value={item.defaultValue}
                   onChange={(e) => item.setOnchange(e.target.value)}
-                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-white focus:outline-none  border-amber-50 border-1 rounded-full`}
+                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-white focus:outline-none  border-amber-50 border rounded-full`}
                 />
               </div>
             ))}
@@ -82,7 +82,7 @@ const AddUserModal = ({ setAddUserModal }) => {
             <select
               value={userRole}
               onChange={(e) => setUserRole(e.target.value)}
-              className="bg-white/10 text-white/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-amber-50 border-1 focus:outline-none"
+              className="bg-white/10 text-white/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-amber-50 border focus:outline-none"
             >
               <option value="Normal" className="text-black">
                 Normal
