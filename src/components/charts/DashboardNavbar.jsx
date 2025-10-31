@@ -6,7 +6,7 @@ import { IoMdLogOut } from "react-icons/io";
 export const DashboardNavbar = () => {
   return (
     <>
-      <nav className="w-full h-16 flex justify-center px-4 md:px-6 bg-white/50 shadow-md">
+      <nav className="w-full h-18 flex justify-center px-4 md:px-6 bg-white/80 shadow-md">
         <div className="w-full flex justify-evenly">
           <div className="w-full flex items-center">
             <Link

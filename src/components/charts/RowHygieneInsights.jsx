@@ -3,13 +3,26 @@ import { GiCash } from "react-icons/gi";
 import { FcSalesPerformance } from "react-icons/fc";
 import { BsCashCoin } from "react-icons/bs";
 import { RiWaterPercentFill } from "react-icons/ri";
+import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
 
-const RowHygieneInsights = ({
-  RHPurchasePrice,
-  RHSellingPrice,
-  RHTotalProfit,
-  RHMargin,
-}) => {
+const RowHygieneInsights = ({ rowHygieneData }) => {
+  // Row Hygiene Sales Total
+  const RHPurchasePrice = Math.round(
+    totalCalculateFn(rowHygieneData, "total_purchase_price")
+  );
+
+  const RHSellingPrice = Math.round(
+    totalCalculateFn(rowHygieneData, "total_selling_price")
+  );
+
+  const RHTotalProfit = Math.round(
+    totalCalculateFn(rowHygieneData, "total_profit")
+  );
+
+  const RHMargin = Math.round(
+    (((RHSellingPrice || 0) - (RHPurchasePrice || 0)) / (RHSellingPrice || 0)) *
+      100
+  );
   return (
     <div className="w-full flex flex-col items-center py-4 bg-blue-600/40 shadow-md rounded-sm">
       <div className="w-full flex justify-center">

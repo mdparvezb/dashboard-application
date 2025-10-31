@@ -1,4 +1,5 @@
 "use client";
+import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
 import AjsWahlaInsights from "@/components/charts/AjsWahlaInsights";
 import BusinessTypeSalesByMonth from "@/components/charts/BusinessTypeSalesByMonth";
 import DashboardNavbar from "@/components/charts/DashboardNavbar";
@@ -67,15 +68,6 @@ const Dashboard = () => {
     return setTransactionData(salesResponse.data.data);
   }
 
-  // Total Calculation Function
-  function totalCalculateFn(aray, columnName) {
-    const total = aray.reduce(
-      (acc, value) => (Number(acc) || 0) + Number(value[columnName] || 0),
-      0
-    );
-    return total;
-  }
-
   // Over All Sales Total
   const overAllPurchasePrice = Math.round(
     totalCalculateFn(transactionData, "total_purchase_price")
@@ -100,60 +92,6 @@ const Dashboard = () => {
   const overAllMargin = Math.round(
     (((overAllSellingPrice || 0) - (overAllPurchasePrice || 0)) /
       (overAllSellingPrice || 0)) *
-      100
-  );
-
-  // Rehome Furniture Sales Total
-  const RFPurchasePrice = Math.round(
-    totalCalculateFn(rehomeFurnitureData, "total_purchase_price")
-  );
-
-  const RFSellingPrice = Math.round(
-    totalCalculateFn(rehomeFurnitureData, "total_selling_price")
-  );
-
-  const RFTotalProfit = Math.round(
-    totalCalculateFn(rehomeFurnitureData, "total_profit")
-  );
-
-  const RFMargin = Math.round(
-    (((RFSellingPrice || 0) - (RFPurchasePrice || 0)) / (RFSellingPrice || 0)) *
-      100
-  );
-
-  // Row Hygiene Sales Total
-  const RHPurchasePrice = Math.round(
-    totalCalculateFn(rowHygieneData, "total_purchase_price")
-  );
-
-  const RHSellingPrice = Math.round(
-    totalCalculateFn(rowHygieneData, "total_selling_price")
-  );
-
-  const RHTotalProfit = Math.round(
-    totalCalculateFn(rowHygieneData, "total_profit")
-  );
-
-  const RHMargin = Math.round(
-    (((RHSellingPrice || 0) - (RHPurchasePrice || 0)) / (RHSellingPrice || 0)) *
-      100
-  );
-
-  // Ajs Wahla Sales Total
-  const AWPurchasePrice = Math.round(
-    totalCalculateFn(ajsWahlaData, "total_purchase_price")
-  );
-
-  const AWSellingPrice = Math.round(
-    totalCalculateFn(ajsWahlaData, "total_selling_price")
-  );
-
-  const AWTotalProfit = Math.round(
-    totalCalculateFn(ajsWahlaData, "total_profit")
-  );
-
-  const AWMargin = Math.round(
-    (((AWSellingPrice || 0) - (AWPurchasePrice || 0)) / (AWSellingPrice || 0)) *
       100
   );
 
@@ -277,29 +215,16 @@ const Dashboard = () => {
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {rehomeFurnitureData.length > 0 && (
               <RehomeFurnitureInsights
-                RFPurchasePrice={RFPurchasePrice}
-                RFSellingPrice={RFSellingPrice}
-                RFTotalProfit={RFTotalProfit}
-                RFMargin={RFMargin}
+                rehomeFurnitureData={rehomeFurnitureData}
               />
             )}
             {rowHygieneData.length > 0 && (
-              <RowHygieneInsights
-                RHPurchasePrice={RHPurchasePrice}
-                RHSellingPrice={RHSellingPrice}
-                RHTotalProfit={RHTotalProfit}
-                RHMargin={RHMargin}
-              />
+              <RowHygieneInsights rowHygieneData={rowHygieneData} />
             )}
             {rowHygieneData.length > 0 && (
-              <AjsWahlaInsights
-                AWPurchasePrice={AWPurchasePrice}
-                AWSellingPrice={AWSellingPrice}
-                AWTotalProfit={AWTotalProfit}
-                AWMargin={AWMargin}
-              />
+              <AjsWahlaInsights ajsWahlaData={ajsWahlaData} />
             )}
-            {rowHygieneData.length > 0 && (
+            {transactionData.length > 0 && (
               <OverallInsights
                 overAllPurchasePrice={overAllPurchasePrice}
                 overAllSellingPrice={overAllSellingPrice}

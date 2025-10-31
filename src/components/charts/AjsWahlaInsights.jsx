@@ -3,13 +3,26 @@ import { GiCash } from "react-icons/gi";
 import { FcSalesPerformance } from "react-icons/fc";
 import { BsCashCoin } from "react-icons/bs";
 import { RiWaterPercentFill } from "react-icons/ri";
+import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
 
-const AjsWahlaInsights = ({
-  AWPurchasePrice,
-  AWSellingPrice,
-  AWTotalProfit,
-  AWMargin,
-}) => {
+const AjsWahlaInsights = ({ ajsWahlaData }) => {
+  // Ajs Wahla Sales Total
+  const AWPurchasePrice = Math.round(
+    totalCalculateFn(ajsWahlaData, "total_purchase_price")
+  );
+
+  const AWSellingPrice = Math.round(
+    totalCalculateFn(ajsWahlaData, "total_selling_price")
+  );
+
+  const AWTotalProfit = Math.round(
+    totalCalculateFn(ajsWahlaData, "total_profit")
+  );
+
+  const AWMargin = Math.round(
+    (((AWSellingPrice || 0) - (AWPurchasePrice || 0)) / (AWSellingPrice || 0)) *
+      100
+  );
   return (
     <div className="w-full flex flex-col items-center py-4 bg-blue-600/40 shadow-md rounded-sm">
       <div>

@@ -3,13 +3,26 @@ import { GiCash } from "react-icons/gi";
 import { FcSalesPerformance } from "react-icons/fc";
 import { BsCashCoin } from "react-icons/bs";
 import { RiWaterPercentFill } from "react-icons/ri";
+import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
 
-const RehomeFurnitureInsights = ({
-  RFPurchasePrice,
-  RFSellingPrice,
-  RFTotalProfit,
-  RFMargin,
-}) => {
+const RehomeFurnitureInsights = ({ rehomeFurnitureData }) => {
+  // Rehome Furniture Sales Total
+  const RFPurchasePrice = Math.round(
+    totalCalculateFn(rehomeFurnitureData, "total_purchase_price")
+  );
+
+  const RFSellingPrice = Math.round(
+    totalCalculateFn(rehomeFurnitureData, "total_selling_price")
+  );
+
+  const RFTotalProfit = Math.round(
+    totalCalculateFn(rehomeFurnitureData, "total_profit")
+  );
+
+  const RFMargin = Math.round(
+    (((RFSellingPrice || 0) - (RFPurchasePrice || 0)) / (RFSellingPrice || 0)) *
+      100
+  );
   return (
     <div className="w-full flex flex-col items-center py-4 bg-blue-600/40 shadow-md rounded-sm">
       <div>

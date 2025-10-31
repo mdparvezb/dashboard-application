@@ -11,7 +11,7 @@ import {
 
 const BusinessTypeSalesByMonth = ({ businessWiseSales }) => {
   return (
-    <div className="w-full rounded-md px-2 py-1 flex flex-col items-center bg-white shadow-md">
+    <div className="w-full rounded-md px-2 py-1 flex flex-col items-center bg-white/80 shadow-md">
       <h2 className="text-center font-semibold text-md">
         Buniness Wise Sales Data By Month
       </h2>
