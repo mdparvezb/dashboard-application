@@ -1,5 +1,5 @@
 "use client";
-import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
+import { sortByMonthFn } from "@/app/utils/sortByMonthFn";
 import AjsWahlaInsights from "@/components/charts/AjsWahlaInsights";
 import BusinessTypeSalesByMonth from "@/components/charts/BusinessTypeSalesByMonth";
 import DashboardNavbar from "@/components/charts/DashboardNavbar";
@@ -21,21 +21,6 @@ const Dashboard = () => {
   const [rowHygieneData, setRowHygieneData] = useState([]);
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
 
   useEffect(() => {
     fetchAllTransactions();
@@ -68,36 +53,10 @@ const Dashboard = () => {
     return setTransactionData(salesResponse.data.data);
   }
 
-  // Over All Sales Total
-  const overAllPurchasePrice = Math.round(
-    totalCalculateFn(transactionData, "total_purchase_price")
-  );
-
-  const overAllSellingPrice = Math.round(
-    totalCalculateFn(transactionData, "total_selling_price")
-  );
-
-  // Total Expenditure
-  const overAllExpenditure = Math.round(
-    totalCalculateFn(expenditureData, "amount")
-  );
-
-  const overAllTotalProfit = Math.round(
-    totalCalculateFn(transactionData, "total_profit")
-  );
-
-  // Net Profit (Profit - Expenditure)
-  const netProfit = (overAllTotalProfit || 0) - (overAllExpenditure || 0);
-
-  const overAllMargin = Math.round(
-    (((overAllSellingPrice || 0) - (overAllPurchasePrice || 0)) /
-      (overAllSellingPrice || 0)) *
-      100
-  );
-
   // Chart Data Calculations
   // Over All Sales By Month
-  const overeAllSalesByMonthTemp = transactionData.reduce((acc, item) => {
+
+  const overAllSalesByMonthTemp = transactionData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
     const month = new Date(item.createdAt).toLocaleString("default", {
       month: "short",
@@ -107,12 +66,14 @@ const Dashboard = () => {
     return acc;
   }, {});
   // Over All Entries to Object
-  const overeAllSalesByMonth = Object.entries(overeAllSalesByMonthTemp).map(
+  const overAllSalesByMonthTempo = Object.entries(overAllSalesByMonthTemp).map(
     ([month, total]) => ({
       month,
       total,
     })
   );
+  // Sorting
+  const overAllSalesByMonth = sortByMonthFn(overAllSalesByMonthTempo, "month");
 
   // Expenditure By Month
   const expenditureByMonthTemp = expenditureData.reduce((acc, item) => {
@@ -125,12 +86,14 @@ const Dashboard = () => {
     return acc;
   }, {});
   // Over All Entries to Object
-  const expenditureByMonth = Object.entries(expenditureByMonthTemp).map(
+  const expenditureByMonthTempo = Object.entries(expenditureByMonthTemp).map(
     ([month, total]) => ({
       month,
       total,
     })
   );
+  // Sorting
+  const expenditureByMonth = sortByMonthFn(expenditureByMonthTempo, "month");
 
   // Expenditure By Year
   const expenditureByYearTemp = expenditureData.reduce((acc, item) => {
@@ -165,12 +128,13 @@ const Dashboard = () => {
   }, {});
 
   // Convert to table-like array
-  const businessWiseSales = Object.entries(businessWiseSalesTemp).map(
+  const businessWiseSalesTempo = Object.entries(businessWiseSalesTemp).map(
     ([month, types]) => {
       const total = Object.values(types).reduce((sum, v) => sum + v, 0);
       return { month, ...types, total };
     }
   );
+  const businessWiseSales = sortByMonthFn(businessWiseSalesTempo, "month");
 
   // Total Sales by Payment Mode
   const paymentModeWiseSalesTemp = transactionData.reduce((acc, item) => {
@@ -199,12 +163,15 @@ const Dashboard = () => {
     return acc;
   }, {});
   // Over All Entries to Object
-  const profitByMonth = Object.entries(profitByMonthTemp).map(
+  const profitByMonthTempo = Object.entries(profitByMonthTemp).map(
     ([month, total]) => ({
       month,
       total,
     })
   );
+  // Sorting
+  const profitByMonth = sortByMonthFn(profitByMonthTempo, "month");
+
   return (
     <>
       {!transactionData.length > 0 && <Loader />}
@@ -226,18 +193,14 @@ const Dashboard = () => {
             )}
             {transactionData.length > 0 && (
               <OverallInsights
-                overAllPurchasePrice={overAllPurchasePrice}
-                overAllSellingPrice={overAllSellingPrice}
-                netProfit={netProfit}
-                overAllExpenditure={overAllExpenditure}
+                transactionData={transactionData}
+                expenditureData={expenditureData}
               />
             )}
           </div>
           <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-4 ">
-            {overeAllSalesByMonth.length > 0 && (
-              <OverallSalesByMonth
-                overeAllSalesByMonth={overeAllSalesByMonth}
-              />
+            {overAllSalesByMonth.length > 0 && (
+              <OverallSalesByMonth overAllSalesByMonth={overAllSalesByMonth} />
             )}
             {expenditureByMonth.length > 0 && (
               <ExpenditureByMonth expenditureByMonth={expenditureByMonth} />

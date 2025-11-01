@@ -47,28 +47,28 @@ const ViewAllProducts = () => {
             <table className="w-full bg-gray-50">
               <thead>
                 <tr className="text-white/90 font-semibold bg-orange-600">
-                  <th className="text-center border-1 border-orange-300 py-2 px-1">
+                  <th className="text-center border border-orange-300 py-2 px-1">
                     Sl No.
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Product Name
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Purchase Price
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Business Type
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Quantity
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Purchase Date
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Barcode
                   </th>
-                  <th className="text-center border-1 border-orange-300 py-1 px-1">
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Actions
                   </th>
                 </tr>
@@ -76,34 +76,34 @@ const ViewAllProducts = () => {
               <tbody>
                 {productsData.map((product, index) => (
                   <tr key={product._id} className="text-black ">
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {index + 1}
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {product.product_name}
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {product.purchase_price}
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {product.business_type || "NA"}
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {product.quantity}
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {new Date(product.purchase_date).toLocaleString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })}
                     </td>
-                    <td className="text-center border-1 border-orange-300">
+                    <td className="text-center border border-orange-300">
                       <div className="overflow-hidden flex justify-center p-1">
                         <QRCodeSVG value={product.product_name} size={80} />
                       </div>
                     </td>
-                    <td className="text-center border-1 border-orange-300 py-1 px-1">
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       <div className="w-full flex justify-center items-center gap-2">
                         <BiEdit size={22} className="text-blue-600" />
                         <MdOutlineDelete size={25} className="text-red-600" />
@@ -122,42 +122,42 @@ const ViewAllProducts = () => {
             {productsData.map((product, index) => (
               <div
                 key={product._id}
-                className="w-full bg-[bisque]/50 border-1 border-orange-200 shadow-md"
+                className="w-full bg-[bisque]/50 border border-orange-200 shadow-md"
               >
                 {/* Mobile Table Headings and Data */}
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Sl No.</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {index + 1}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Product Name</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {product.product_name}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Purchase Price</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {product.purchase_price}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Business Type</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {product.business_type || "NA"}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Quantity</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {product.quantity}
                   </p>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Purchase Date</p>
-                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {new Date(product.purchase_date).toLocaleString("en-US", {
                       year: "numeric",
                       month: "short",
@@ -165,15 +165,15 @@ const ViewAllProducts = () => {
                     })}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Barcode</p>
-                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     <QRCodeSVG value={product.product_name} size={80} />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-1 border-b-1 border-orange-200 items-center overflow-hidden">
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Actions</p>
-                  <div className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     <div className="w-full flex items-center gap-4">
                       <BiEdit size={22} className="text-blue-600" />
                       <MdOutlineDelete size={25} className="text-red-600" />

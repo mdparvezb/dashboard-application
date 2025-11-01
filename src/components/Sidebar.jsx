@@ -47,10 +47,10 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
           <GoPlus size={18} className="text-white" />
           <p className="text-white">Add User</p>
         </div>
-        <div className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link href={'/admin/users'} className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
           <FaRegUser size={18} className="text-white" />
           <p className="text-white">View All Users</p>
-        </div>
+        </Link>
       </div>
       {/* End User Lists */}
       <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">

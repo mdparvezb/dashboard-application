@@ -19,11 +19,9 @@ const ViewRehomeFurnitureData = () => {
     const response = await axios.get(
       "/api/salestransactions/getalltransactions"
     );
-    console.log(response.data.data);
     const filteredData = response.data.data.filter(
       (trans) => trans.business_type === "rehome_furniture"
     );
-    console.log(filteredData);
     setRehomeFurnitureData(filteredData);
   }
   return (

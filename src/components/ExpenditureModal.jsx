@@ -5,15 +5,12 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
 import Loader from "./Loader";
 
-const ExpenditureModal = ({
-  businessName,
-  businessType,
-  setExpenditureModalOpen,
-}) => {
+const ExpenditureModal = ({ businessName, setExpenditureModalOpen }) => {
   const [expenseCategory, setExpenseCategory] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
+  const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
   const inputData = [
     {
@@ -29,6 +26,13 @@ const ExpenditureModal = ({
       defaultValue: description,
       setOnchange: setDescription,
       className: "",
+    },
+    {
+      labelName: "Expense Date",
+      inputType: "date",
+      defaultValue: date,
+      setOnchange: setDate,
+      className: "appearance-none",
     },
 
     {
@@ -51,6 +55,7 @@ const ExpenditureModal = ({
       user_name: "default",
       expense_category: expenseCategory.trim(),
       description: description.trim(),
+      expense_date: date,
       amount: amount,
       payment_mode: paymentMode,
     };
@@ -68,7 +73,7 @@ const ExpenditureModal = ({
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-[100vh] backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none">
+      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none">
         <div className="w-full md:max-w-[500px] flex flex-col bg-[#191970] py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-white font-bold text-center">
             {businessName}
