@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import productsModel from "../../../../lib/models/productModel";
+import productsModel from "../../../../../lib/models/productModel";
 
-const { ConnectDB } = require("../../../../lib/config/db");
+const { ConnectDB } = require("../../../../../lib/config/db");
 
 ConnectDB();
 
 // Save Product Data
 export async function POST(request) {
   const data = await request.json();
-  console.log(data);
   try {
     const response = await productsModel.create(data);
     return NextResponse.json({

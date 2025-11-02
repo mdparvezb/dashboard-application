@@ -5,18 +5,34 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 import Loader from "@/components/Loader";
+import { toast } from "react-toastify";
 
 const Users = () => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchUsers();
   }, []);
 
-  async function fetchProducts() {
+  async function fetchUsers() {
     const response = await axios.get("/api/users/fetchusers");
     setUsersList(response.data.data);
   }
+
+  async function deleteUser(id) {
+    const response = await axios.delete(`/api/users/deleteuserbyid/`, {
+      params: {
+        id: id,
+      },
+    });
+    fetchUsers();
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
+  }
+
   return (
     <>
       {!usersList.length > 0 && <Loader />}
@@ -67,8 +83,12 @@ const Users = () => {
                     </td>
 
                     <td className="text-center border border-orange-300 py-1 px-1">
-                      <div className="w-full flex justify-center items-center gap-2">
-                        <MdOutlineDelete size={25} className="text-red-600" />
+                      <div className="flex p-1 justify-center items-center gap-2">
+                        <MdOutlineDelete
+                          size={25}
+                          onClick={() => deleteUser(user._id)}
+                          className="text-red-600 hover:bg-gray-200 rounded-full cursor-pointer"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -109,7 +129,7 @@ const Users = () => {
 
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Actions</p>
-                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
+                  <div className="px-4 py-2 border-l rounded-full border-orange-200 font-semibold">
                     <div className="w-full flex items-center gap-4">
                       <MdOutlineDelete size={25} className="text-red-600" />
                     </div>

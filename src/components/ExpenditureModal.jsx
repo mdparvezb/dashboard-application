@@ -74,8 +74,8 @@ const ExpenditureModal = ({ businessName, setExpenditureModalOpen }) => {
     <>
       {loading && <Loader />}
       <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none">
-        <div className="w-full md:max-w-[500px] flex flex-col bg-[#191970] py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
-          <h2 className="text-2xl text-white font-bold text-center">
+        <div className="w-full md:max-w-[500px] flex flex-col bg-white py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
+          <h2 className="text-2xl text-red-600 font-bold text-center">
             {businessName}
           </h2>
           <div className="w-full flex flex-col gap-2 items-center py-4">
@@ -83,24 +83,24 @@ const ExpenditureModal = ({ businessName, setExpenditureModalOpen }) => {
             {inputData.map((item, index) => (
               <div
                 key={index}
-                className="w-full flex flex-col gap-0.5 text-white/90 tracking-wider"
+                className="w-full flex flex-col gap-0.5 text-black/90 font-semibold tracking-wider"
               >
                 <label>{item.labelName}</label>
                 <input
                   type={item.inputType}
                   value={item.defaultValue}
                   onChange={(e) => item.setOnchange(e.target.value)}
-                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-white focus:outline-none  border-amber-50 border-1 rounded-full`}
+                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-black focus:outline-none border-black-50 font-semibold border rounded-full`}
                 />
               </div>
             ))}
             {/* Payment Mode input */}
-            <div className="w-full flex flex-col gap-0.5 text-white/90">
+            <div className="w-full flex flex-col gap-0.5 font-semibold text-black/90">
               <label>Payment Mode</label>
               <select
                 value={paymentMode}
                 onChange={(e) => setPaymentMode(e.target.value)}
-                className="bg-white/10 text-white/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-amber-50 border-1 focus:outline-none"
+                className="bg-white/10 text-black/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full font-semibold border-black-50 border focus:outline-none"
               >
                 <option value="Cash" className="text-black">
                   Cash

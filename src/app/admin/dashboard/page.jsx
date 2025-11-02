@@ -58,7 +58,7 @@ const Dashboard = () => {
 
   const overAllSalesByMonthTemp = transactionData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
-    const month = new Date(item.createdAt).toLocaleString("default", {
+    const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
     });
     // Sum total sales for that month
@@ -78,7 +78,7 @@ const Dashboard = () => {
   // Expenditure By Month
   const expenditureByMonthTemp = expenditureData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
-    const month = new Date(item.createdAt).toLocaleString("default", {
+    const month = new Date(item.expense_date).toLocaleString("default", {
       month: "short",
     });
     // Sum total sales for that month
@@ -98,7 +98,7 @@ const Dashboard = () => {
   // Expenditure By Year
   const expenditureByYearTemp = expenditureData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
-    const year = new Date(item.createdAt).toLocaleString("default", {
+    const year = new Date(item.expense_date).toLocaleString("default", {
       year: "numeric",
     });
     // Sum total sales for that month
@@ -115,7 +115,7 @@ const Dashboard = () => {
 
   // Total Sales by Business Type
   const businessWiseSalesTemp = transactionData.reduce((acc, item) => {
-    const month = new Date(item.createdAt).toLocaleString("default", {
+    const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
     });
     const type = item.business_type || "NA";
@@ -155,7 +155,7 @@ const Dashboard = () => {
   // Profit By Month
   const profitByMonthTemp = transactionData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
-    const month = new Date(item.createdAt).toLocaleString("default", {
+    const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
     });
     // Sum total sales for that month
@@ -188,7 +188,7 @@ const Dashboard = () => {
             {rowHygieneData.length > 0 && (
               <RowHygieneInsights rowHygieneData={rowHygieneData} />
             )}
-            {rowHygieneData.length > 0 && (
+            {ajsWahlaData.length > 0 && (
               <AjsWahlaInsights ajsWahlaData={ajsWahlaData} />
             )}
             {transactionData.length > 0 && (

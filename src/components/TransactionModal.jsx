@@ -113,24 +113,24 @@ const TransactionModal = ({
             {inputData.map((item, index) => (
               <div
                 key={index}
-                className="w-full flex flex-col gap-0.5 text-black/90 tracking-wider"
+                className="w-full flex flex-col gap-0.5 font-semibold text-black/90 tracking-wider"
               >
                 <label>{item.labelName}</label>
                 <input
                   type={item.inputType}
                   value={item.defaultValue}
                   onChange={(e) => item.setOnchange(e.target.value)}
-                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-black focus:outline-none  border-black-50 border rounded-full`}
+                  className={`${item.className} bg-white/10 px-4 py-2 w-full text-black focus:outline-none font-semibold border-black-50 border rounded-full`}
                 />
               </div>
             ))}
             {/* Payment Mode input */}
-            <div className="w-full flex flex-col gap-0.5 text-black/90">
+            <div className="w-full flex flex-col gap-0.5 font-semibold text-black/90">
               <label>Payment Mode</label>
               <select
                 value={paymentMode}
                 onChange={(e) => setPaymentMode(e.target.value)}
-                className="bg-white/10 text-black/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-black-50 border cursor-pointer focus:outline-none"
+                className="bg-white/10 font-semibold text-black/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-black-50 border cursor-pointer focus:outline-none"
               >
                 <option value="Cash" className="text-black">
                   Cash

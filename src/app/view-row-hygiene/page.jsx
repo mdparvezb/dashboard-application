@@ -3,19 +3,19 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 import Loader from "@/components/Loader";
+import { toast } from "react-toastify";
 
 const ViewRowHygieneData = () => {
   const [rowHygieneData, setRowHygieneData] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchTransactions();
   }, []);
 
-  async function fetchProducts() {
+  async function fetchTransactions() {
     const response = await axios.get(
       "/api/salestransactions/getalltransactions"
     );
@@ -24,6 +24,24 @@ const ViewRowHygieneData = () => {
     );
     setRowHygieneData(filteredData);
   }
+  //  Delete Function
+  async function deleteTransaction(id) {
+    const response = await axios.delete(
+      "/api/salestransactions/deletetransbyid",
+      {
+        params: {
+          id: id,
+        },
+      }
+    );
+    fetchTransactions();
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
+  }
+
   return (
     <>
       {!rowHygieneData.length > 0 && <Loader />}
@@ -111,7 +129,7 @@ const ViewRowHygieneData = () => {
                       {trans.unit_selling_price}
                     </td>
                     <td className="text-center border border-orange-300 py-1 px-1">
-                      {new Date(trans.createdAt).toLocaleString("default", {
+                      {new Date(trans.sales_date).toLocaleString("default", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
@@ -137,8 +155,11 @@ const ViewRowHygieneData = () => {
                     </td>
                     <td className="text-center border border-orange-300 py-1 px-1">
                       <div className="w-full flex justify-center items-center gap-2">
-                        <BiEdit size={22} className="text-blue-600" />
-                        <MdOutlineDelete size={25} className="text-red-600" />
+                        <MdOutlineDelete
+                          onClick={() => deleteTransaction(trans._id)}
+                          size={25}
+                          className="text-red-600"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -189,7 +210,7 @@ const ViewRowHygieneData = () => {
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Sales Date</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
-                    {new Date(trans.createdAt).toLocaleString("en-US", {
+                    {new Date(trans.sales_date).toLocaleString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -244,8 +265,11 @@ const ViewRowHygieneData = () => {
                   <p className="px-4 py-2 font-semibold">Actions</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     <div className="w-full flex items-center gap-4">
-                      <BiEdit size={22} className="text-blue-600" />
-                      <MdOutlineDelete size={25} className="text-red-600" />
+                      <MdOutlineDelete
+                        size={25}
+                        onClick={() => deleteTransaction(trans._id)}
+                        className="text-red-600 cursor-pointer"
+                      />
                     </div>
                   </div>
                 </div>

@@ -57,7 +57,7 @@ const ProductModal = ({ setProductModalOpen }) => {
       business_type: businessType.trim(),
     };
 
-    const response = await axios.post("/api/product", data);
+    const response = await axios.post("/api/product/createproduct", data);
     setProductModalOpen(false);
     setLoading(false);
     if (response.data.success) {
@@ -80,14 +80,14 @@ const ProductModal = ({ setProductModalOpen }) => {
             {inputData.map((item, index) => (
               <div
                 key={index}
-                className="w-full flex flex-col gap-0.5 text-black/90 tracking-wider"
+                className="w-full flex flex-col gap-0.5 font-semibold text-black/90 tracking-wider"
               >
                 <label>{item.labelName}</label>
                 <input
                   type={item.inputType}
                   value={item.defaultValue}
                   onChange={(e) => item.setOnchange(e.target.value)}
-                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-black focus:outline-none  border-black-50 border rounded-full`}
+                  className={`${item.className} bg-white/10 font-semibold px-4 py-2  w-full text-black focus:outline-none border-black-50 border rounded-full`}
                 />
               </div>
             ))}
@@ -97,7 +97,7 @@ const ProductModal = ({ setProductModalOpen }) => {
               <select
                 value={businessType}
                 onChange={(e) => setBusinessType(e.target.value)}
-                className={`appearance-none bg-white/10 px-4 py-2  w-full text-black focus:outline-none cursor-pointer border-black-50 border rounded-full`}
+                className={`appearance-none bg-white/10 px-4 py-2  w-full text-black focus:outline-none cursor-pointer font-semibold border-black-50 border rounded-full`}
               >
                 <option value="rehome_furniture" className="text-black">
                   Rehome Furniture

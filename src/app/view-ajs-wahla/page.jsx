@@ -3,19 +3,19 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 import Loader from "@/components/Loader";
+import { toast } from "react-toastify";
 
 const ViewAjsWahlaData = () => {
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchTransactions();
   }, []);
 
-  async function fetchProducts() {
+  async function fetchTransactions() {
     const response = await axios.get(
       "/api/salestransactions/getalltransactions"
     );
@@ -24,11 +24,27 @@ const ViewAjsWahlaData = () => {
     );
     setAjsWahlaData(filteredData);
   }
+  //  Delete Function
+  async function deleteTransaction(id) {
+    const response = await axios.delete(
+      "/api/salestransactions/deletetransbyid",
+      {
+        params: {
+          id: id,
+        },
+      }
+    );
+    fetchTransactions();
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
+  }
   return (
     <>
       {!ajsWahlaData.length > 0 && <Loader />}
       <div className="w-full flex justify-center pb-4">
-        {/* Desktop Table */}
         <div className="w-full px-2 md:px-4 mt-10">
           <div className="w-full flex flex-col md:flex-row justify-between items-center">
             <Link
@@ -111,7 +127,7 @@ const ViewAjsWahlaData = () => {
                       {trans.unit_selling_price}
                     </td>
                     <td className="text-center border border-orange-300 py-1 px-1">
-                      {new Date(trans.createdAt).toLocaleString("default", {
+                      {new Date(trans.sales_date).toLocaleString("default", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
@@ -137,8 +153,11 @@ const ViewAjsWahlaData = () => {
                     </td>
                     <td className="text-center border border-orange-300 py-1 px-1">
                       <div className="w-full flex justify-center items-center gap-2">
-                        <BiEdit size={22} className="text-blue-600" />
-                        <MdOutlineDelete size={25} className="text-red-600" />
+                        <MdOutlineDelete
+                          size={25}
+                          onClick={() => deleteTransaction(trans._id)}
+                          className="text-red-600 cursor-pointer"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -158,19 +177,19 @@ const ViewAjsWahlaData = () => {
                 {/* Mobile Table Headings and Data */}
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Sl No.</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {index + 1}
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Product Name</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {trans.product_name}
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Quantity</p>
-                  <p className="px-4 py-2 border-l-1 border-orange-200 font-semibold">
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {trans.quantity}
                   </p>
                 </div>
@@ -189,7 +208,7 @@ const ViewAjsWahlaData = () => {
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Sales Date</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
-                    {new Date(trans.createdAt).toLocaleString("en-US", {
+                    {new Date(trans.sales_date).toLocaleString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -244,8 +263,11 @@ const ViewAjsWahlaData = () => {
                   <p className="px-4 py-2 font-semibold">Actions</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     <div className="w-full flex items-center gap-4">
-                      <BiEdit size={22} className="text-blue-600" />
-                      <MdOutlineDelete size={25} className="text-red-600" />
+                      <MdOutlineDelete
+                        size={25}
+                        onClick={() => deleteTransaction(trans._id)}
+                        className="text-red-600"
+                      />
                     </div>
                   </div>
                 </div>
@@ -254,6 +276,7 @@ const ViewAjsWahlaData = () => {
           </div>
         </div>
       </div>
+      <></>
     </>
   );
 };

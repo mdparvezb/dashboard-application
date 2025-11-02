@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
 import userModel from "../../../../../lib/models/userModel";
+import { ConnectDB } from "../../../../../lib/config/db";
 
-const { ConnectDB } = require("../../../../../lib/config/db");
 
-ConnectDB();
-
-export async function GET() {
+ConnectDB()
+export async function DELETE(request) {
   try {
-    const response = await userModel.find({}).select("-password");
+    const userId = await request.nextUrl.searchParams.get("id");
+    console.log(userId);
+
+    const response = await userModel.findByIdAndDelete(userId);
 
     return NextResponse.json({
-      data: response,
+      message: "User Deleted Successfully",
       success: true,
     });
   } catch (error) {

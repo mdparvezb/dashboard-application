@@ -55,8 +55,8 @@ const AddUserModal = ({ setAddUserModal }) => {
     <>
       {loading && <Loader />}
       <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none overflow-hidden">
-        <div className="w-full md:max-w-[500px] flex flex-col bg-purple-900 py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
-          <h2 className="text-2xl text-white font-bold text-center">
+        <div className="w-full md:max-w-[500px] flex flex-col bg-white py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
+          <h2 className="text-2xl text-black font-bold text-shadow-xs text-center">
             Add New User
           </h2>
           <div className="w-full flex flex-col gap-2 items-center py-4">
@@ -64,25 +64,25 @@ const AddUserModal = ({ setAddUserModal }) => {
             {inputData.map((item, index) => (
               <div
                 key={index}
-                className="w-full flex flex-col gap-0.5 text-white/90 tracking-wider"
+                className="w-full flex flex-col gap-0.5 font-semibold text-black/90 tracking-wider"
               >
                 <label>{item.labelName}</label>
                 <input
                   type={item.inputType}
                   value={item.defaultValue}
                   onChange={(e) => item.setOnchange(e.target.value)}
-                  className={`${item.className} bg-white/10 px-4 py-2  w-full text-white focus:outline-none  border-amber-50 border rounded-full`}
+                  className={`${item.className} bg-white/10 px-4 py-2 font-semibold  w-full text-black focus:outline-none border-black-50 border rounded-full`}
                 />
               </div>
             ))}
           </div>
           {/* User Role Selection */}
-          <div className="w-full flex flex-col gap-0.5 text-white/90">
+          <div className="w-full flex flex-col font-semibold gap-0.5 text-black/90">
             <label>Choose User Role</label>
             <select
               value={userRole}
               onChange={(e) => setUserRole(e.target.value)}
-              className="bg-white/10 text-white/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-amber-50 border focus:outline-none"
+              className="bg-white/10 text-black/90 px-4 py-2 w-fulloutline-none appearance-none rounded-full border-black-50 font-semibold border focus:outline-none"
             >
               <option value="Normal" className="text-black">
                 Normal
