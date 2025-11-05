@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
 
+
+
   useEffect(() => {
     fetchAllTransactions();
   }, []);
@@ -177,7 +179,7 @@ const Dashboard = () => {
       {!transactionData.length > 0 && <Loader />}
       <div className="w-full bg-blue-600/30 overflow-auto">
         <DashboardNavbar />
-
+       
         <div className="w-full px-4 md:px-6 py-4">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {rehomeFurnitureData.length > 0 && (

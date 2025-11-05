@@ -4,9 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
-import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
+import DownloadExcel from "@/components/DownloadExcel";
 
 const ViewRowHygieneData = () => {
   const [rowHygieneData, setRowHygieneData] = useState([]);
@@ -59,10 +59,10 @@ const ViewRowHygieneData = () => {
             <h2 className="w-full text-center text-[purple] font-bold text-shadow-xs text-3xl py-2">
               Row Hygiene Data
             </h2>
-            <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
-              <PiMicrosoftExcelLogoThin size={20} />
-              Download
-            </button>
+            <DownloadExcel
+              data={rowHygieneData}
+              fileName={"Row-Hygiene-Data"}
+            />
           </div>
           {/* Table For Product View */}
           <div className="w-full hidden md:block">

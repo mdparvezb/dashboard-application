@@ -129,7 +129,7 @@ const Users = () => {
 
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Actions</p>
-                  <div className="px-4 py-2 border-l rounded-full border-orange-200 font-semibold">
+                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     <div className="w-full flex items-center gap-4">
                       <MdOutlineDelete size={25} className="text-red-600" />
                     </div>

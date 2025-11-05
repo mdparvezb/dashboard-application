@@ -1,21 +1,22 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
 import Loader from "./Loader";
+import ProductSearchBox from "./ProductSearchBox";
 
 const TransactionModal = ({
   businessName,
   businessType,
   setTransactionModalOpen,
-  transactionModalOpen,
 }) => {
+  const [filterList, setFilterList] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [date, setDate] = useState("");
-
   const [unitPurchasePrice, setUnitPurchasePrice] = useState("");
   const [unitSellingPrice, setUnitSellingPrice] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
@@ -25,35 +26,38 @@ const TransactionModal = ({
       labelName: "Product Name",
       inputType: "text",
       defaultValue: productName,
-      setOnchange: setProductName,
+      setOnchange: (e) => {
+        setProductName(e.target.value);
+        setShowDropdown(true);
+      },
       className: "",
     },
     {
       labelName: "Quantity",
       inputType: "number",
       defaultValue: quantity,
-      setOnchange: setQuantity,
+      setOnchange: (e) => setQuantity(e.target.value),
       className: "appearance-none",
     },
     {
       labelName: "Sales Date",
       inputType: "date",
       defaultValue: date,
-      setOnchange: setDate,
+      setOnchange: (e) => setDate(e.target.value),
       className: "appearance-none",
     },
     {
       labelName: "Unit Purchase Price",
       inputType: "number",
       defaultValue: unitPurchasePrice,
-      setOnchange: setUnitPurchasePrice,
+      setOnchange: (e) => setUnitPurchasePrice(e.target.value),
       className: "appearance-none",
     },
     {
       labelName: "Unit Selling Price",
       inputType: "Number",
       defaultValue: unitSellingPrice,
-      setOnchange: setUnitSellingPrice,
+      setOnchange: (e) => setUnitSellingPrice(e.target.value),
       className: "appearance-none",
     },
   ];
@@ -100,6 +104,17 @@ const TransactionModal = ({
     }
   }
 
+  // Fetch Product Data
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+  async function getAllProducts() {
+    const response = await axios.get("api/product/getallproducts");
+    const data = await response.data.data.filter(
+      (item) => item.business_type === businessType
+    );
+    return setFilterList(data);
+  }
   return (
     <>
       {loading && <Loader />}
@@ -108,7 +123,7 @@ const TransactionModal = ({
           <h2 className="text-2xl text-blue-600 font-bold text-center">
             {businessName}
           </h2>
-          <div className="w-full flex flex-col gap-2 items-center py-4">
+          <div className="w-full flex flex-col gap-2 items-center relative py-4">
             {/* All Inputs */}
             {inputData.map((item, index) => (
               <div
@@ -119,11 +134,19 @@ const TransactionModal = ({
                 <input
                   type={item.inputType}
                   value={item.defaultValue}
-                  onChange={(e) => item.setOnchange(e.target.value)}
+                  onChange={item.setOnchange}
                   className={`${item.className} bg-white/10 px-4 py-2 w-full text-black focus:outline-none font-semibold border-black-50 border rounded-full`}
                 />
               </div>
             ))}
+            <ProductSearchBox
+              showDropdown={showDropdown}
+              setShowDropdown={setShowDropdown}
+              productList={filterList}
+              productName={productName}
+              setProductName={setProductName}
+              className=""
+            />
             {/* Payment Mode input */}
             <div className="w-full flex flex-col gap-0.5 font-semibold text-black/90">
               <label>Payment Mode</label>

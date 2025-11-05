@@ -14,7 +14,10 @@ const Signin = () => {
       toast.error("All fields are required!");
       return;
     }
-    const response = await axios.post("api/login", { userName, userPassword });
+    const response = await axios.post("api/login", {
+      userName: userName.trim(),
+      userPassword: userPassword.trim(),
+    });
     if (response.data.success) {
       router.push("/");
       toast.success(response.data.message);

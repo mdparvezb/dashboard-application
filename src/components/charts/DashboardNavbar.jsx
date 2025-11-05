@@ -20,6 +20,7 @@ export const DashboardNavbar = () => {
           <div className="w-full flex justify-center items-center text-2xl font-bold text-shadow-xs">
             <h2 className="text-blue-800">Dashboard</h2>
           </div>
+
           <div className="w-full flex items-center justify-end">
             <IoMdLogOut size={30} className="text-red-600 cursor-pointer" />
           </div>

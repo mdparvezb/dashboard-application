@@ -4,9 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
-import { PiMicrosoftExcelLogoThin } from "react-icons/pi";
 import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
+import DownloadExcel from "@/components/DownloadExcel";
 
 const ViewAjsWahlaData = () => {
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
@@ -45,7 +45,7 @@ const ViewAjsWahlaData = () => {
     <>
       {!ajsWahlaData.length > 0 && <Loader />}
       <div className="w-full flex justify-center pb-4">
-        <div className="w-full px-2 md:px-4 mt-10">
+        <div className="w-full px-4 md:px-4 mt-10">
           <div className="w-full flex flex-col md:flex-row justify-between items-center">
             <Link
               href={"/"}
@@ -57,10 +57,7 @@ const ViewAjsWahlaData = () => {
             <h2 className="w-full text-center text-orange-600 text-shadow-xs font-bold text-3xl py-2 ">
               Ajs Wahla Data
             </h2>
-            <button className="flex gap-2 items-center px-4 py-2 bg-green-600 text-white hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white rounded-sm transition-all duration-300 cursor-pointer">
-              <PiMicrosoftExcelLogoThin size={20} />
-              Download
-            </button>
+            <DownloadExcel data={ajsWahlaData} fileName={"Ajs-Wahla-Data"} />
           </div>
           {/* Desktop Table Starts Here */}
           <div className="w-full hidden md:block">

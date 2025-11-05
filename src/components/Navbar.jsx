@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -9,9 +10,15 @@ const Navbar = ({ setIsMobileMenu }) => {
         className="text-blue-600 absolute top-4 left-4 md:hidden"
         onClick={() => setIsMobileMenu(true)}
       />
-      <h2 className="text-blue-600 font-bold text-xl  text-shadow-xs">
-        Dashboard Application
-      </h2>
+      <Link
+        href={"/"}
+        className="w-full flex justify-center gap-2 items-center"
+      >
+        <img src="./logo.png" alt="Logo" width={40} />
+        <h2 className="text-blue-600 font-bold md:text-2xl mt-2 text-shadow-xs">
+          Dashboard Application
+        </h2>
+      </Link>
     </div>
   );
 };
