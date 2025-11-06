@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { IoMdLogOut } from "react-icons/io";
+import Logout from "../Logout";
 
 export const DashboardNavbar = () => {
   return (
@@ -21,9 +21,7 @@ export const DashboardNavbar = () => {
             <h2 className="text-blue-800">Dashboard</h2>
           </div>
 
-          <div className="w-full flex items-center justify-end">
-            <IoMdLogOut size={30} className="text-red-600 cursor-pointer" />
-          </div>
+         <Logout />
         </div>
       </nav>
     </>

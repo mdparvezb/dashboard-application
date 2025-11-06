@@ -1,0 +1,12 @@
+import jwt from "jsonwebtoken";
+import { ConnectDB } from "../../../lib/config/db";
+
+ConnectDB();
+export async function getDataFromToken(request) {
+  try {
+    const token =  request.cookies.get("token")?.value || "";
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+    return decodedToken;
+  } catch (error) {
+  }
+}

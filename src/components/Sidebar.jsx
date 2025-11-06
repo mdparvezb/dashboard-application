@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { BsCashCoin } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
@@ -8,8 +8,17 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoEyeOutline } from "react-icons/io5";
 import Link from "next/link";
+import { getDataFromToken } from "@/app/utils/getDataFromToken";
 
 const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
+  // async function getUser() {
+  //   const user = (await getDataFromToken()) || "";
+  //   console.log(user);
+  // }
   return (
     <div className="w-full">
       <div className="w-full flex justify-center">
@@ -34,7 +43,9 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
         </Link>
       </div>
       {/* End Home and Dashboard Items */}
-      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">Users</h3>
+      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
+        Users
+      </h3>
       {/* Start User Lists */}
       <div className="w-full flex flex-col gap-2 px-2">
         <div
@@ -47,7 +58,10 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
           <GoPlus size={18} className="text-white" />
           <p className="text-white">Add User</p>
         </div>
-        <Link href={'/admin/users'} className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10">
+        <Link
+          href={"/admin/users"}
+          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+        >
           <FaRegUser size={18} className="text-white" />
           <p className="text-white">View All Users</p>
         </Link>
