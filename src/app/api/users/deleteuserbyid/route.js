@@ -7,7 +7,6 @@ ConnectDB()
 export async function DELETE(request) {
   try {
     const userId = await request.nextUrl.searchParams.get("id");
-    console.log(userId);
 
     const response = await userModel.findByIdAndDelete(userId);
 

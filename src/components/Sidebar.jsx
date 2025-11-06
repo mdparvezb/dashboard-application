@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { BsCashCoin } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
@@ -8,17 +8,34 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoEyeOutline } from "react-icons/io5";
 import Link from "next/link";
-import { getDataFromToken } from "@/app/utils/getDataFromToken";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  const router = useRouter();
+  const [user, setUser] = useState("");
 
-  // async function getUser() {
-  //   const user = (await getDataFromToken()) || "";
-  //   console.log(user);
-  // }
+  // User Logout
+  async function logoutHandler() {
+    const response = await axios.get("api/logout");
+    if (response.data.success) {
+      router.push("/login");
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  async function getUser() {
+    const response = await axios.get("api/users/me");
+    return setUser(response.data.data);
+  }
+
   return (
     <div className="w-full">
       <div className="w-full flex justify-center">
@@ -34,38 +51,44 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
           <IoHomeOutline size={18} className="text-white" />
           <p className="text-white">Home</p>
         </Link>
-        <Link
-          href={"/admin/dashboard"}
-          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
-        >
-          <BsCashCoin size={18} className="text-white" />
-          <p className="text-white">Dashboard</p>
-        </Link>
+        {user.user_role === "Admin" && (
+          <Link
+            href={"/admin/dashboard"}
+            className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+          >
+            <BsCashCoin size={18} className="text-white" />
+            <p className="text-white">Dashboard</p>
+          </Link>
+        )}
       </div>
       {/* End Home and Dashboard Items */}
-      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
-        Users
-      </h3>
+      {user.user_role === "Admin" && (
+        <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
+          Users
+        </h3>
+      )}
       {/* Start User Lists */}
-      <div className="w-full flex flex-col gap-2 px-2">
-        <div
-          onClick={() => {
-            setAddUserModal(true);
-            setIsMobileMenu(false);
-          }}
-          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10 cursor-pointer"
-        >
-          <GoPlus size={18} className="text-white" />
-          <p className="text-white">Add User</p>
+      {user.user_role === "Admin" && (
+        <div className="w-full flex flex-col gap-2 px-2">
+          <div
+            onClick={() => {
+              setAddUserModal(true);
+              setIsMobileMenu(false);
+            }}
+            className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10 cursor-pointer"
+          >
+            <GoPlus size={18} className="text-white" />
+            <p className="text-white">Add User</p>
+          </div>
+          <Link
+            href={"/admin/users"}
+            className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
+          >
+            <FaRegUser size={18} className="text-white" />
+            <p className="text-white">View All Users</p>
+          </Link>
         </div>
-        <Link
-          href={"/admin/users"}
-          className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
-        >
-          <FaRegUser size={18} className="text-white" />
-          <p className="text-white">View All Users</p>
-        </Link>
-      </div>
+      )}
       {/* End User Lists */}
       <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
         Products
@@ -132,13 +155,13 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
 
       {/* Log Out Button */}
       <div className="px-4">
-        <Link
-          href="#"
-          className="hover:bg-white/30 bg-white/10 w-full py-2 mt-6 rounded-md text-white text-md flex justify-center items-center gap-2"
+        <div
+          onClick={logoutHandler}
+          className="hover:bg-white/30 bg-white/10 w-full py-2 mt-6 rounded-md text-white text-md flex justify-center items-center gap-2 cursor-pointer"
         >
           <AiOutlineLogout size={18} className="text-white" />
           Logout
-        </Link>
+        </div>
       </div>
     </div>
   );
