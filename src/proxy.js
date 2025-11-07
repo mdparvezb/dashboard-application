@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { getDataFromToken } from "./app/utils/getDataFromToken";
+import { ConnectDB } from "../lib/config/db";
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request) {
+  ConnectDB()
   const path = request.nextUrl.pathname;
 
   const isPublic = path === "/login";
