@@ -30,7 +30,7 @@ const Signin = () => {
     <>
       <div className="flex h-screen flex-col justify-center bg-blue-950 px-6 py-12 lg:px-8">
         <div className="">
-          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-white">
+          <h2 className="text-center text-2xl font-bold tracking-tight text-white">
             Sign in to your account
           </h2>
         </div>
@@ -74,7 +74,7 @@ const Signin = () => {
             <div>
               <button
                 onClick={signInUser}
-                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline"
+                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-indigo-400 focus-visible:outline"
               >
                 Sign in
               </button>

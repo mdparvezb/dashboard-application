@@ -13,7 +13,7 @@ import RehomeFurnitureInsights from "@/components/charts/RehomeFurnitureInsights
 import RowHygieneInsights from "@/components/charts/RowHygieneInsights";
 import Loader from "@/components/Loader";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const Dashboard = () => {
   const [transactionData, setTransactionData] = useState([]);
@@ -21,8 +21,20 @@ const Dashboard = () => {
   const [rowHygieneData, setRowHygieneData] = useState([]);
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
-
-
+  const monthOrder = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   useEffect(() => {
     fetchAllTransactions();
@@ -54,6 +66,56 @@ const Dashboard = () => {
     setAjsWahlaData(ajsWahla);
     return setTransactionData(salesResponse.data.data);
   }
+
+  // Filters Work
+  const allMonthsSales = Array.from(
+    new Set(
+      transactionData.map((date) =>
+        new Date(date.sales_date).toLocaleString("default", { month: "short" })
+      )
+    )
+  );
+  const allMonthsExpenditure = Array.from(
+    new Set(
+      expenditureData.map((date) =>
+        new Date(date.expense_date).toLocaleString("default", {
+          month: "short",
+        })
+      )
+    )
+  );
+  // Unique Months from Transactions and Expenditure
+  const allMonths = [
+    ...new Set([...allMonthsSales, ...allMonthsExpenditure]),
+  ].sort((a, b) => monthOrder.indexOf(b) - monthOrder.indexOf(a));
+
+  const allYearsSales = Array.from(
+    new Set(
+      transactionData.map((date) => new Date(date.sales_date).getFullYear())
+    )
+  );
+  const allYearsExpenditure = Array.from(
+    new Set(
+      expenditureData.map((date) => new Date(date.expense_date).getFullYear())
+    )
+  );
+
+  const allYears = [
+    ...new Set([...allYearsSales, ...allYearsExpenditure]),
+  ].sort((a, b) => b - a); // sort years descending
+
+  const [selectedMonth, setSelectedMonth] = useState(allMonths[0]);
+  const [selectedYear, setSelectedYear] = useState(allYears[0]);
+
+  const filteredTransactionData = useMemo(() => {
+    const filtered = transactionData.filter((item) => {
+      const month = new Date(item.sales_date).toLocaleString("default", {
+        month: "short",
+      });
+      const year = new Date(item.sales_date).getFullYear();
+      return month === selectedMonth && year === selectedYear;
+    });
+  });
 
   // Chart Data Calculations
   // Over All Sales By Month
@@ -179,7 +241,29 @@ const Dashboard = () => {
       {!transactionData.length > 0 && <Loader />}
       <div className="w-full bg-blue-600/30 overflow-auto">
         <DashboardNavbar />
-       
+        {/* Filters */}
+        <div className="w-full mt-4 grid grid-cols-2 gap-4 items-center px-4 md:px-6">
+          <div className="text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-200 shadow-md rounded">
+            <h2 className="font-semibold">Month</h2>
+            <select name="" id="">
+              {allMonths.map((month) => (
+                <option key={month} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-200 shadow-md rounded">
+            <h2 className="font-semibold">Year</h2>
+            <select name="" id="" className="">
+              {allYears.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="w-full px-4 md:px-6 py-4">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {rehomeFurnitureData.length > 0 && (

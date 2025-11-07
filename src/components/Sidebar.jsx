@@ -39,7 +39,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
   return (
     <div className="w-full">
       <div className="w-full flex justify-center">
-        <p className="text-white">Jass Wahla</p>
+        <p className="text-white">{user.user_name || ""}</p>
       </div>
       <hr className="w-full my-4 border-white/20" />
       {/* Home and Dashboard Items */}

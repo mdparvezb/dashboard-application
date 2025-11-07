@@ -21,6 +21,7 @@ const TransactionModal = ({
   const [unitSellingPrice, setUnitSellingPrice] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState("");
   const inputData = [
     {
       labelName: "Product Name",
@@ -77,7 +78,7 @@ const TransactionModal = ({
     setLoading(true);
     const data = {
       business_type: businessType,
-      user_name: "Default",
+      user_name: user.user_name || "",
       product_name: productName.trim(),
       quantity: Number(quantity),
       sales_date: date,
@@ -107,6 +108,7 @@ const TransactionModal = ({
   // Fetch Product Data
   useEffect(() => {
     getAllProducts();
+    getUser();
   }, []);
   async function getAllProducts() {
     const response = await axios.get("api/product/getallproducts");
@@ -115,6 +117,13 @@ const TransactionModal = ({
     );
     return setFilterList(data);
   }
+
+  // Get User Data
+  async function getUser() {
+    const response = await axios.get("api/users/me");
+    return setUser(response.data.data);
+  }
+
   return (
     <>
       {loading && <Loader />}

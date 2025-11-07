@@ -10,9 +10,11 @@ import DownloadExcel from "@/components/DownloadExcel";
 
 const ViewAjsWahlaData = () => {
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     fetchTransactions();
+    getUser();
   }, []);
 
   async function fetchTransactions() {
@@ -41,6 +43,13 @@ const ViewAjsWahlaData = () => {
       toast.error(response.data.message);
     }
   }
+
+  // Get User Data
+  async function getUser() {
+    const response = await axios.get("api/users/me");
+    return setUser(response.data.data);
+  }
+
   return (
     <>
       {!ajsWahlaData.length > 0 && <Loader />}
@@ -100,9 +109,11 @@ const ViewAjsWahlaData = () => {
                   <th className="text-center border border-orange-300 py-1 px-1">
                     Created By
                   </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Action
-                  </th>
+                  {user.user_role === "Admin" && (
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Action
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -148,15 +159,17 @@ const ViewAjsWahlaData = () => {
                     <td className="text-center border border-orange-300 py-1 px-1">
                       {trans.user_name}
                     </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      <div className="w-full flex justify-center items-center gap-2">
-                        <MdOutlineDelete
-                          size={25}
-                          onClick={() => deleteTransaction(trans._id)}
-                          className="text-red-600 cursor-pointer"
-                        />
-                      </div>
-                    </td>
+                    {user.user_role === "Admin" && (
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        <div className="w-full flex justify-center items-center gap-2">
+                          <MdOutlineDelete
+                            size={25}
+                            onClick={() => deleteTransaction(trans._id)}
+                            className="text-red-600 cursor-pointer"
+                          />
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -256,18 +269,20 @@ const ViewAjsWahlaData = () => {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
-                  <p className="px-4 py-2 font-semibold">Actions</p>
-                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
-                    <div className="w-full flex items-center gap-4">
-                      <MdOutlineDelete
-                        size={25}
-                        onClick={() => deleteTransaction(trans._id)}
-                        className="text-red-600"
-                      />
+                {user.user_role === "Admin" && (
+                  <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
+                    <p className="px-4 py-2 font-semibold">Actions</p>
+                    <div className="px-4 py-2 border-l border-orange-200 font-semibold">
+                      <div className="w-full flex items-center gap-4">
+                        <MdOutlineDelete
+                          size={25}
+                          onClick={() => deleteTransaction(trans._id)}
+                          className="text-red-600"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>

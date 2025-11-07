@@ -4,7 +4,7 @@ import { ConnectDB } from "../lib/config/db";
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request) {
-  ConnectDB()
+  ConnectDB();
   const path = request.nextUrl.pathname;
 
   const isPublic = path === "/login";
@@ -23,7 +23,6 @@ export async function proxy(request) {
 
   // Admin Routes
   const user = (await getDataFromToken(request)) || "";
-  console.log(user.user_role);
 
   if (user.user_role !== "Admin" && isAdminProcted && token) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
