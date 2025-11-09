@@ -82,7 +82,7 @@ const Signin = () => {
           </div>
 
           <p className="mt-10 text-center text-sm/6 text-gray-400">
-            Forgot passwrod? Contact to your Administrator
+            Forgot Password? Contact to your Administrator.
           </p>
         </div>
       </div>

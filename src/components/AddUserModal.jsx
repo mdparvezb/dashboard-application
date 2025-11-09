@@ -13,14 +13,14 @@ const AddUserModal = ({ setAddUserModal }) => {
 
   const inputData = [
     {
-      labelName: "User Name",
+      labelName: "Set user Name",
       inputType: "text",
       defaultValue: userName,
       setOnchange: setUserName,
       className: "",
     },
     {
-      labelName: "User Password",
+      labelName: "Set user Password",
       inputType: "password",
       defaultValue: userPassword,
       setOnchange: setUserPassword,

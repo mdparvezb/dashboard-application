@@ -4,9 +4,12 @@ import { ConnectDB } from "../../../lib/config/db";
 ConnectDB();
 export async function getDataFromToken(request) {
   try {
-    const token =  request.cookies.get("token")?.value || "";
+    const token = request.cookies.get("token")?.value || "";
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl));
+    }
+
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     return decodedToken;
-  } catch (error) {
-  }
+  } catch (error) {}
 }

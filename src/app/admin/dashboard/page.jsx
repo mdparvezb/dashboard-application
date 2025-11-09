@@ -13,7 +13,7 @@ import RehomeFurnitureInsights from "@/components/charts/RehomeFurnitureInsights
 import RowHygieneInsights from "@/components/charts/RowHygieneInsights";
 import Loader from "@/components/Loader";
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [transactionData, setTransactionData] = useState([]);
@@ -21,6 +21,10 @@ const Dashboard = () => {
   const [rowHygieneData, setRowHygieneData] = useState([]);
   const [ajsWahlaData, setAjsWahlaData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
+  const [filteredSalesData, setFilteredSalesData] = useState(transactionData);
+  const [fitleredExpenditureData, setFitleredExpenditureData] =
+    useState(filteredSalesData);
+
   const monthOrder = [
     "Jan",
     "Feb",
@@ -67,7 +71,8 @@ const Dashboard = () => {
     return setTransactionData(salesResponse.data.data);
   }
 
-  // Filters Work
+  // Filters ********************************************
+
   const allMonthsSales = Array.from(
     new Set(
       transactionData.map((date) =>
@@ -104,23 +109,58 @@ const Dashboard = () => {
     ...new Set([...allYearsSales, ...allYearsExpenditure]),
   ].sort((a, b) => b - a); // sort years descending
 
-  const [selectedMonth, setSelectedMonth] = useState(allMonths[0]);
-  const [selectedYear, setSelectedYear] = useState(allYears[0]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
-  const filteredTransactionData = useMemo(() => {
-    const filtered = transactionData.filter((item) => {
-      const month = new Date(item.sales_date).toLocaleString("default", {
-        month: "short",
-      });
-      const year = new Date(item.sales_date).getFullYear();
-      return month === selectedMonth && year === selectedYear;
-    });
-  });
+  useEffect(() => {
+    if (!selectedMonth || !selectedYear) {
+      setFilteredSalesData(transactionData);
+      setFitleredExpenditureData(expenditureData);
+    }
+  }, [transactionData, expenditureData, selectedMonth, selectedYear]);
+
+  useEffect(() => {
+    const filteredSales = transactionData.filter(
+      (item) =>
+        (!selectedMonth ||
+          new Date(item.sales_date).toLocaleString("default", {
+            month: "short",
+          }) === selectedMonth) &&
+        (!selectedYear ||
+          new Date(item.sales_date).getFullYear() === parseInt(selectedYear))
+    );
+    const filteredExpenditure = expenditureData.filter(
+      (item) =>
+        (!selectedMonth ||
+          new Date(item.expense_date).toLocaleString("default", {
+            month: "short",
+          }) === selectedMonth) &&
+        (!selectedYear ||
+          new Date(item.expense_date).getFullYear() === parseInt(selectedYear))
+    );
+
+    setFilteredSalesData(filteredSales);
+    setFitleredExpenditureData(filteredExpenditure);
+    const rf = filteredSales.filter(
+      (trans) => trans.business_type === "rehome_furniture"
+    );
+    setRehomeFurnitureData(rf);
+
+    const rh = filteredSales.filter(
+      (trans) => trans.business_type === "row_hygiene"
+    );
+    setRowHygieneData(rh);
+    const ajs = filteredSales.filter(
+      (trans) => trans.business_type === "ajs_wahla"
+    );
+    setAjsWahlaData(ajs);
+  }, [selectedMonth, selectedYear]);
+
+  // ********************************************
 
   // Chart Data Calculations
   // Over All Sales By Month
-
-  const overAllSalesByMonthTemp = transactionData.reduce((acc, item) => {
+  const overAllSalesByMonthTemp = filteredSalesData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
     const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
@@ -140,7 +180,7 @@ const Dashboard = () => {
   const overAllSalesByMonth = sortByMonthFn(overAllSalesByMonthTempo, "month");
 
   // Expenditure By Month
-  const expenditureByMonthTemp = expenditureData.reduce((acc, item) => {
+  const expenditureByMonthTemp = fitleredExpenditureData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
     const month = new Date(item.expense_date).toLocaleString("default", {
       month: "short",
@@ -160,7 +200,7 @@ const Dashboard = () => {
   const expenditureByMonth = sortByMonthFn(expenditureByMonthTempo, "month");
 
   // Expenditure By Year
-  const expenditureByYearTemp = expenditureData.reduce((acc, item) => {
+  const expenditureByYearTemp = fitleredExpenditureData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
     const year = new Date(item.expense_date).toLocaleString("default", {
       year: "numeric",
@@ -178,7 +218,7 @@ const Dashboard = () => {
   );
 
   // Total Sales by Business Type
-  const businessWiseSalesTemp = transactionData.reduce((acc, item) => {
+  const businessWiseSalesTemp = filteredSalesData.reduce((acc, item) => {
     const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
     });
@@ -201,7 +241,7 @@ const Dashboard = () => {
   const businessWiseSales = sortByMonthFn(businessWiseSalesTempo, "month");
 
   // Total Sales by Payment Mode
-  const paymentModeWiseSalesTemp = transactionData.reduce((acc, item) => {
+  const paymentModeWiseSalesTemp = filteredSalesData.reduce((acc, item) => {
     // Get Payment Mode
     const mode = item.payment_mode || "NA";
     // Sum total sales by Payment Mode
@@ -217,7 +257,7 @@ const Dashboard = () => {
   );
 
   // Profit By Month
-  const profitByMonthTemp = transactionData.reduce((acc, item) => {
+  const profitByMonthTemp = filteredSalesData.reduce((acc, item) => {
     // Get month name only (e.g. "Jan", "Feb")
     const month = new Date(item.sales_date).toLocaleString("default", {
       month: "short",
@@ -243,21 +283,33 @@ const Dashboard = () => {
         <DashboardNavbar />
         {/* Filters */}
         <div className="w-full mt-4 grid grid-cols-2 gap-4 items-center px-4 md:px-6">
-          <div className="text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-200 shadow-md rounded">
-            <h2 className="font-semibold">Month</h2>
-            <select name="" id="">
+          <div className="text-sm md:text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-700 text-white shadow-md rounded">
+            <label className="font-semibold">Month</label>
+            <select
+              className="cursor-pointer focus:outline-none"
+              onChange={(e) => setSelectedMonth(e.target.value)}
+            >
+              <option className="text-black" value="">
+                All Months
+              </option>
               {allMonths.map((month) => (
-                <option key={month} value={month}>
+                <option className="text-black" key={month} value={month}>
                   {month}
                 </option>
               ))}
             </select>
           </div>
-          <div className="text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-200 shadow-md rounded">
-            <h2 className="font-semibold">Year</h2>
-            <select name="" id="" className="">
+          <div className="text-sm md:text-xl flex gap-2 md:gap-5 justify-center py-2 bg-blue-700 text-white shadow-md rounded">
+            <label className="font-semibold">Year</label>
+            <select
+              className="cursor-pointer focus:outline-none"
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              <option className="text-black" value="">
+                All Years
+              </option>
               {allYears.map((year) => (
-                <option key={year} value={year}>
+                <option className="text-black" key={year} value={year}>
                   {year}
                 </option>
               ))}
@@ -277,10 +329,10 @@ const Dashboard = () => {
             {ajsWahlaData.length > 0 && (
               <AjsWahlaInsights ajsWahlaData={ajsWahlaData} />
             )}
-            {transactionData.length > 0 && (
+            {(transactionData.length > 0 || expenditureData.length > 0) && (
               <OverallInsights
-                transactionData={transactionData}
-                expenditureData={expenditureData}
+                filteredSalesData={filteredSalesData}
+                fitleredExpenditureData={fitleredExpenditureData}
               />
             )}
           </div>

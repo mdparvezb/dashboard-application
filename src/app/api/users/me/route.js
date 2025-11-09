@@ -6,19 +6,18 @@ import { getDataFromToken } from "@/app/utils/getDataFromToken";
 ConnectDB();
 export async function GET(request) {
   try {
-    const userData = await getDataFromToken(request) || "";
-    if(userData) {
- const user = await userModel
-      .findOne({ _id: userData._id })
-      .select("-password");
+    const userData = (await getDataFromToken(request)) || "";
+    if (userData) {
+      const user = await userModel
+        .findOne({ _id: userData._id })
+        .select("-password");
 
-    return NextResponse.json({
-      data: user,
-      message: "User Found",
-      success: true,
-    });
+      return NextResponse.json({
+        data: user,
+        message: "User Found",
+        success: true,
+      });
     }
-   
   } catch (error) {
     return NextResponse.json({
       error: error,

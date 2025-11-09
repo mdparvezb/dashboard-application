@@ -5,33 +5,36 @@ import { BsCashCoin } from "react-icons/bs";
 import { IoCash } from "react-icons/io5";
 import { totalCalculateFn } from "@/app/utils/totalCalculateFn";
 
-const OverallInsights = ({ transactionData, expenditureData }) => {
+const OverallInsights = ({ filteredSalesData, fitleredExpenditureData }) => {
+
   // Over All Sales Total
-  const overAllPurchasePrice = Math.round(
-    totalCalculateFn(transactionData, "total_purchase_price")
-  );
+    const overAllPurchasePrice = Math.round(
+      totalCalculateFn(filteredSalesData, "total_purchase_price")
+    )
 
-  const overAllSellingPrice = Math.round(
-    totalCalculateFn(transactionData, "total_selling_price")
-  );
+    const overAllSellingPrice = Math.round(
+      totalCalculateFn(filteredSalesData, "total_selling_price")
+    );
 
-  // Total Expenditure
-  const overAllExpenditure = Math.round(
-    totalCalculateFn(expenditureData, "amount")
-  );
+    // Total Expenditure
+    const overAllExpenditure = Math.round(
+      totalCalculateFn(fitleredExpenditureData, "amount")
+    );
 
-  const overAllTotalProfit = Math.round(
-    totalCalculateFn(transactionData, "total_profit")
-  );
+    const overAllTotalProfit = Math.round(
+      totalCalculateFn(filteredSalesData, "total_profit")
+    );
 
-  // Net Profit (Profit - Expenditure)
-  const netProfit = (overAllTotalProfit || 0) - (overAllExpenditure || 0);
+    // Net Profit (Profit - Expenditure)
+    const netProfit = (overAllTotalProfit || 0) - (overAllExpenditure || 0);
 
-  const overAllMargin = Math.round(
-    (((overAllSellingPrice || 0) - (overAllPurchasePrice || 0)) /
-      (overAllSellingPrice || 0)) *
-      100
-  );
+    const overAllMargin = Math.round(
+      (((overAllSellingPrice || 0) - (overAllPurchasePrice || 0)) /
+        (overAllSellingPrice || 0)) *
+        100
+    );
+
+
   return (
     <div className="w-full flex flex-col items-center py-4 bg-blue-600/40 shadow-md rounded-sm">
       <div>

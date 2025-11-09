@@ -41,7 +41,7 @@ const ViewAllProducts = () => {
   // Get User Data
   async function getUser() {
     const response = await axios.get("api/users/me");
-    return setUser(response.data.data);
+    return setUser(response.data.data || "");
   }
   return (
     <>

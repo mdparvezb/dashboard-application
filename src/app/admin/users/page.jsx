@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 
 const Users = () => {
   const [usersList, setUsersList] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
 
   useEffect(() => {
     fetchUsers();
+    getUser();
   }, []);
 
   async function fetchUsers() {
@@ -31,6 +33,12 @@ const Users = () => {
     } else {
       toast.error(response.data.message);
     }
+  }
+
+  // Get Current User Data
+  async function getUser() {
+    const response = await axios.get("/api/users/me");
+    return setCurrentUser(response.data.data || "");
   }
 
   return (
@@ -83,13 +91,15 @@ const Users = () => {
                     </td>
 
                     <td className="text-center border border-orange-300 py-1 px-1">
-                      <div className="flex p-1 justify-center items-center gap-2">
-                        <MdOutlineDelete
-                          size={25}
-                          onClick={() => deleteUser(user._id)}
-                          className="text-red-600 hover:bg-gray-200 rounded-full cursor-pointer"
-                        />
-                      </div>
+                      {(currentUser.user_name || "") !== user.user_name && (
+                        <div className="flex p-1 justify-center items-center gap-2">
+                          <MdOutlineDelete
+                            size={25}
+                            onClick={() => deleteUser(user._id)}
+                            className="text-red-600 hover:bg-gray-200 rounded-full cursor-pointer"
+                          />
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -130,9 +140,11 @@ const Users = () => {
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Actions</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
-                    <div className="w-full flex items-center gap-4">
-                      <MdOutlineDelete size={25} className="text-red-600" />
-                    </div>
+                    {(currentUser.user_name || "") !== user.user_name && (
+                      <div className="w-full flex items-center gap-4">
+                        <MdOutlineDelete size={25} className="text-red-600" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

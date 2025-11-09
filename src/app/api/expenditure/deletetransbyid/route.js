@@ -2,12 +2,11 @@ import { NextResponse } from "next/server";
 import expenditureModel from "../../../../../lib/models/expenditureModel";
 import { ConnectDB } from "../../../../../lib/config/db";
 
-ConnectDB
+ConnectDB();
 
 export async function DELETE(request) {
   try {
     const trnasctionId = await request.nextUrl.searchParams.get("id");
-
     const response = await expenditureModel.findByIdAndDelete(trnasctionId);
 
     return NextResponse.json({

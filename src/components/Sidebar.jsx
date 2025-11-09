@@ -33,7 +33,7 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
 
   async function getUser() {
     const response = await axios.get("api/users/me");
-    return setUser(response.data.data);
+    return setUser(response.data.data || "");
   }
 
   return (
