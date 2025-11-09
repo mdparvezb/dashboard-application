@@ -12,9 +12,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
+const Sidebar = ({
+  setProductModalOpen,
+  setIsMobileMenu,
+  setAddUserModal,
+  user,
+}) => {
   const router = useRouter();
-  const [user, setUser] = useState("");
 
   // User Logout
   async function logoutHandler() {
@@ -27,19 +31,10 @@ const Sidebar = ({ setProductModalOpen, setIsMobileMenu, setAddUserModal }) => {
     }
   }
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  async function getUser() {
-    const response = await axios.get("api/users/me");
-    return setUser(response.data.data || "");
-  }
-
   return (
     <div className="w-full">
       <div className="w-full flex justify-center">
-        <p className="text-white">{user.user_name || ""}</p>
+        <p className="text-white">Hi! {user.user_name || ""}</p>
       </div>
       <hr className="w-full my-4 border-white/20" />
       {/* Home and Dashboard Items */}

@@ -8,17 +8,19 @@ const MobileMenu = ({
   setIsMobileMenu,
   isMobileMenu,
   setAddUserModal,
+  user,
 }) => {
   return (
     <>
       {isMobileMenu && (
-        <div className="w-[95%] h-screen bg-gradient-to-b from-blue-900 to-blue-700 shadow-3xl py-4 overflow-x-hidden absolute top-0 left-0 z-[99] md:hidden">
+        <div className="w-[95%] h-full bg-linear-to-b from-blue-900 to-blue-700 shadow-3xl py-4 overflow-x-hidden absolute top-0 left-0 z-99 md:hidden">
           <RxCross2
             size={25}
             onClick={() => setIsMobileMenu(false)}
             className="absolute top-4 right-6 text-white"
           />
           <Sidebar
+            user={user}
             setProductModalOpen={setProductModalOpen}
             setIsMobileMenu={setIsMobileMenu}
             setAddUserModal={setAddUserModal}
