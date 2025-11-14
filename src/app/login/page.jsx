@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/Loader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 const Signin = () => {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   async function signInUser(e) {
     e.preventDefault();
@@ -14,20 +16,24 @@ const Signin = () => {
       toast.error("All fields are required!");
       return;
     }
+    setLoading(true);
     const response = await axios.post("api/login", {
       userName: userName.trim(),
       userPassword: userPassword.trim(),
     });
     if (response.data.success) {
       router.push("/");
+      setLoading(false);
       toast.success(response.data.message);
     } else {
+      setLoading(false);
       toast.error(response.data.message);
     }
   }
 
   return (
     <>
+      {loading && <Loader />}
       <div className="flex h-screen flex-col justify-center bg-blue-950 px-6 py-12 lg:px-8">
         <div className="">
           <h2 className="text-center text-2xl font-bold tracking-tight text-white">
@@ -48,7 +54,7 @@ const Signin = () => {
                   name="user"
                   type="text"
                   required
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline -outline-offset-1 outline-white/10 placeholder:text-gray-500  focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>

@@ -73,7 +73,7 @@ const ExpenditureModal = ({ businessName, setExpenditureModalOpen }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none">
+      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 fixed top-0 left-0 flex justify-center items-center pointer-none">
         <div className="w-full md:max-w-[500px] flex flex-col bg-white py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-red-600 font-bold text-center">
             {businessName}

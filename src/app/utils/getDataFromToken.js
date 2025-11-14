@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ConnectDB } from "../../../lib/config/db";
+import { NextResponse } from "next/server";
 
 ConnectDB();
 export async function getDataFromToken(request) {
@@ -11,5 +12,7 @@ export async function getDataFromToken(request) {
 
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     return decodedToken;
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
+  }
 }

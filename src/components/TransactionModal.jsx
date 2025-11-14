@@ -16,6 +16,7 @@ const TransactionModal = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [search, setSearch] = useState("");
   const [date, setDate] = useState("");
   const [unitPurchasePrice, setUnitPurchasePrice] = useState("");
   const [unitSellingPrice, setUnitSellingPrice] = useState("");
@@ -26,9 +27,10 @@ const TransactionModal = ({
     {
       labelName: "Product Name",
       inputType: "text",
-      defaultValue: productName,
+      placeholder: "Search..",
+      defaultValue: search,
       setOnchange: (e) => {
-        setProductName(e.target.value);
+        setSearch(e.target.value);
         setShowDropdown(true);
       },
       className: "",
@@ -36,6 +38,7 @@ const TransactionModal = ({
     {
       labelName: "Quantity",
       inputType: "number",
+      placeholder: "0",
       defaultValue: quantity,
       setOnchange: (e) => setQuantity(e.target.value),
       className: "appearance-none",
@@ -43,6 +46,7 @@ const TransactionModal = ({
     {
       labelName: "Sales Date",
       inputType: "date",
+      placeholder: "",
       defaultValue: date,
       setOnchange: (e) => setDate(e.target.value),
       className: "appearance-none",
@@ -50,6 +54,7 @@ const TransactionModal = ({
     {
       labelName: "Unit Purchase Price",
       inputType: "number",
+      placeholder: "0",
       defaultValue: unitPurchasePrice,
       setOnchange: (e) => setUnitPurchasePrice(e.target.value),
       className: "appearance-none",
@@ -57,6 +62,7 @@ const TransactionModal = ({
     {
       labelName: "Unit Selling Price",
       inputType: "Number",
+      placeholder: "0",
       defaultValue: unitSellingPrice,
       setOnchange: (e) => setUnitSellingPrice(e.target.value),
       className: "appearance-none",
@@ -127,7 +133,7 @@ const TransactionModal = ({
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full h-screen bg-black/80 px-6 backdrop-blur-[2px] z-50 absolute left-0 flex justify-center items-center pointer-none transition-opacity duration-500">
+      <div className="w-full h-screen bg-black/80 px-6 backdrop-blur-[2px] z-50 fixed left-0 flex justify-center items-center pointer-none transition-opacity duration-500">
         <div className="w-full md:max-w-[500px] flex flex-col bg-white py-4 px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-blue-600 font-bold text-center">
             {businessName}
@@ -142,6 +148,7 @@ const TransactionModal = ({
                 <label>{item.labelName}</label>
                 <input
                   type={item.inputType}
+                  placeholder={item.placeholder}
                   value={item.defaultValue}
                   onChange={item.setOnchange}
                   className={`${item.className} bg-white/10 px-4 py-2 w-full text-black focus:outline-none font-semibold border-black-50 border rounded-full`}
@@ -154,7 +161,9 @@ const TransactionModal = ({
               productList={filterList}
               productName={productName}
               setProductName={setProductName}
-              className=""
+              setUnitPurchasePrice={setUnitPurchasePrice}
+              setSearch={setSearch}
+              search={search}
             />
             {/* Payment Mode input */}
             <div className="w-full flex flex-col gap-0.5 font-semibold text-black/90">

@@ -8,14 +8,19 @@ import { QRCodeSVG } from "qrcode.react";
 import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
 import DownloadExcel from "@/components/DownloadExcel";
+import ProductSold from "@/components/ProductSold";
 
 const ViewAllProducts = () => {
   const [productsData, setProductsData] = useState([]);
   const [user, setUser] = useState("");
+  const [updateModal, setUpdateModal] = useState(false);
+  const [productId, setProductId] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     fetchProducts();
     getUser();
-  }, []);
+  }, [updateModal]);
 
   async function fetchProducts() {
     const response = await axios.get("/api/product/getallproducts");
@@ -46,6 +51,14 @@ const ViewAllProducts = () => {
   return (
     <>
       {!productsData.length > 0 && <Loader />}
+      {updateModal && (
+        <ProductSold
+          loading={loading}
+          setLoading={setLoading}
+          productId={productId}
+          setUpdateModal={setUpdateModal}
+        />
+      )}
       <div className="w-full flex justify-center pb-4">
         <div className="w-full px-2 md:px-4 mt-10">
           <div className="w-full flex flex-col md:flex-row justify-between items-center gap-2">
@@ -83,7 +96,19 @@ const ViewAllProducts = () => {
                     Quantity
                   </th>
                   <th className="text-center border border-orange-300 py-1 px-1">
+                    Payment mode
+                  </th>
+                  <th className="text-center border border-orange-300 py-1 px-1">
                     Purchase Date
+                  </th>
+                  <th className="text-center border border-orange-300 py-1 px-1">
+                    Status
+                  </th>
+                  <th className="text-center border border-orange-300 py-1 px-1">
+                    Sold Paymt Mode
+                  </th>
+                  <th className="text-center border border-orange-300 py-1 px-1">
+                    Change Status
                   </th>
                   <th className="text-center border border-orange-300 py-1 px-1">
                     Barcode
@@ -114,12 +139,33 @@ const ViewAllProducts = () => {
                       {product.quantity}
                     </td>
                     <td className="text-center border border-orange-300 py-1 px-1">
+                      {product.payment_mode}
+                    </td>
+                    <td className="text-center border border-orange-300 py-1 px-1">
                       {new Date(product.purchase_date).toLocaleString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })}
                     </td>
+                    <td className="text-center border border-orange-300 py-1 px-1">
+                      {product.status}
+                    </td>
+                    <td className="text-center border border-orange-300 py-1 px-1">
+                      {product.sold_payment_mode}
+                    </td>
+                    <td className="text-center border border-orange-300 py-1 px-1">
+                      <button
+                        onClick={() => {
+                          setProductId(product._id);
+                          setUpdateModal(true);
+                        }}
+                        className="px-3 py-1 text-sm bg-blue-700 rounded-sm shadow-sm text-white cursor-pointer hover:opacity-90"
+                      >
+                        Update
+                      </button>
+                    </td>
+
                     <td className="text-center border border-orange-300">
                       <div className="overflow-hidden flex justify-center p-1">
                         <QRCodeSVG value={product.product_name} size={80} />

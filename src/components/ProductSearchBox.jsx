@@ -4,16 +4,20 @@ const ProductSearchBox = ({
   showDropdown,
   setShowDropdown,
   productList,
-  productName,
   setProductName,
+  setUnitPurchasePrice,
+  setSearch,
+  search,
 }) => {
   // Filter items based on search term
   const filteredList = productList.filter((item) =>
-    item.product_name.toLowerCase().includes(productName.toLowerCase())
+    item.product_name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSelect = (item) => {
+  const handleSelect = (item, price) => {
     setProductName(item);
+    setUnitPurchasePrice(price);
+    setSearch(item);
     setShowDropdown(false);
   };
 
@@ -21,13 +25,13 @@ const ProductSearchBox = ({
     <div className="w-full max-w-sm mx-auto mt-10 absolute top-10 left-2 z-99">
       <div className="relative">
         {/* Dropdown */}
-        {showDropdown && productName && (
+        {showDropdown && search && (
           <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-md mt-1 shadow-md max-h-48 overflow-y-auto">
             {filteredList.length > 0 ? (
               filteredList.map((item, index) => (
                 <li
                   key={index}
-                  onClick={() => handleSelect(item.product_name)}
+                  onClick={() => handleSelect(item.product_name, item.purchase_price)}
                   className="p-2 hover:bg-blue-100 cursor-pointer"
                 >
                   {item.product_name}

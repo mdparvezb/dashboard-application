@@ -10,6 +10,7 @@ const ProductModal = ({ setProductModalOpen }) => {
   const [purchaseDate, setPurchaseDate] = useState("");
   const [purchasePrice, setPurchasePrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [paymentMode, setPaymentMode] = useState("Cash");
   const [businessType, setBusinessType] = useState("rehome_furniture");
   const [loading, setLoading] = useState(false);
   const inputData = [
@@ -55,6 +56,9 @@ const ProductModal = ({ setProductModalOpen }) => {
       purchase_price: purchasePrice.trim(),
       quantity: quantity.trim(),
       business_type: businessType.trim(),
+      payment_mode: paymentMode.trim(),
+      status: "Unsold",
+      sold_payment_mode: "NA"
     };
 
     const response = await axios.post("/api/product/createproduct", data);
@@ -70,7 +74,7 @@ const ProductModal = ({ setProductModalOpen }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 absolute top-0 left-0 flex justify-center items-center pointer-none overflow-hidden">
+      <div className="w-full bg-black/80 px-6 h-screen backdrop-blur-[2px] z-50 fixed left-0 flex justify-center items-center pointer-none overflow-hidden">
         <div className="w-full md:max-w-[500px] flex flex-col bg-white py-4 px-4 md:px-6 shadow-[0_10px_36px_0_rgba(0, 0, 0, 0.16), 0_0_0_1px_rgba(0, 0, 0, 0.06)] rounded-xl">
           <h2 className="text-2xl text-blue-600 font-bold text-center text-shadow-xs">
             Add Product
@@ -91,9 +95,31 @@ const ProductModal = ({ setProductModalOpen }) => {
                 />
               </div>
             ))}
+
+            {/* Payment Type Drop Down */}
+            <div className="w-full flex flex-col gap-0.5 text-white/90 tracking-wider">
+              <label className="text-black/90 font-semibold">
+                Payment Mode
+              </label>
+              <select
+                value={paymentMode}
+                onChange={(e) => setPaymentMode(e.target.value)}
+                className={`appearance-none bg-white/10 px-4 py-2  w-full text-black focus:outline-none cursor-pointer font-semibold border-black-50 border rounded-full`}
+              >
+                <option value="rehome_furniture" className="text-black">
+                  Cash
+                </option>
+                <option value="row_hygiene" className="text-black">
+                  Bank
+                </option>
+              </select>
+            </div>
+
             {/* Drop Down Menu for Business Type */}
             <div className="w-full flex flex-col gap-0.5 text-white/90 tracking-wider">
-              <label className="text-black/90">Business Type</label>
+              <label className="text-black/90 font-semibold">
+                Business Type
+              </label>
               <select
                 value={businessType}
                 onChange={(e) => setBusinessType(e.target.value)}
@@ -129,6 +155,7 @@ const ProductModal = ({ setProductModalOpen }) => {
         </div>
       </div>
       )
+      
     </>
   );
 };
