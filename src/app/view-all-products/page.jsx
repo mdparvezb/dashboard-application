@@ -238,6 +238,35 @@ const ViewAllProducts = () => {
                     })}
                   </div>
                 </div>
+
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Status</p>
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
+                    {product.status}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Sold Paymt Mode</p>
+                  <p className="px-4 py-2 border-l border-orange-200 font-semibold">
+                    {product.sold_payment_mode}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
+                  <p className="px-4 py-2 font-semibold">Change Status</p>
+                  <div className="px-4 py-2 border-l border-orange-200 font-semibold">
+                    <button
+                      onClick={() => {
+                        setProductId(product._id);
+                        setUpdateModal(true);
+                      }}
+                      className="px-3 py-1 text-sm bg-blue-700 rounded-sm shadow-sm text-white cursor-pointer hover:opacity-90"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-1 border-b border-orange-200 items-center overflow-hidden">
                   <p className="px-4 py-2 font-semibold">Barcode</p>
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
