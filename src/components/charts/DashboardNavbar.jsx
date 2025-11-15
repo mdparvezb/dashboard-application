@@ -17,11 +17,22 @@ export const DashboardNavbar = () => {
             </Link>
           </div>
 
-          <div className="w-full flex justify-center items-center text-2xl font-bold text-shadow-xs">
-            <h2 className="text-blue-800">Dashboard</h2>
-          </div>
+          <Link
+            href={"/"}
+            className="w-full flex justify-center gap-2 items-center"
+          >
+            <img src="./../logo.png" alt="Logo" width={38} />
+            <div className="flex items-center">
+              <span className="text-blue-700 font-bold text-2xl md:text-3xl mt-2 text-shadow-sm">
+                Entry
+              </span>
+              <span className="text-orange-600 font-bold text-2xl md:text-3xl mt-2 text-shadow-sm">
+                Codex
+              </span>
+            </div>
+          </Link>
 
-         <Logout />
+          <Logout />
         </div>
       </nav>
     </>

@@ -31,14 +31,14 @@ export async function POST(request) {
     const token = jwt.sign(
       { user_name: user.user_name, _id: user._id, user_role: user.user_role },
       process.env.SECRET_KEY,
-      { expiresIn: "1d" }
+      { expiresIn: "1h" }
     );
 
     const response = NextResponse.json({
       success: true,
       message: "Login Successful",
     });
-    response.cookies.set("token", token, { httpOnly: true });
+    response.cookies.set("token", token, { httpOnly: true, maxAge: 60 * 60 });
     return response;
   } catch (error) {
     return NextResponse.json({

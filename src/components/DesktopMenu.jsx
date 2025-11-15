@@ -9,7 +9,7 @@ const DesktopMenu = ({
   user,
 }) => {
   return (
-    <div className="h-screen bg-linear-to-b from-blue-900 to-blue-700 hidden md:flex md:flex-col md:w-[22%] shadow-md py-4 overflow-x-hidden">
+    <div className="h-full bg-linear-to-br from-purple-800 to-blue-700 hidden md:flex md:flex-col md:w-[22%] shadow-md py-4 overflow-auto">
       <Sidebar
         user={user}
         setProductModalOpen={setProductModalOpen}

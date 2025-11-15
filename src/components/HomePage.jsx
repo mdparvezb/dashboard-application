@@ -35,7 +35,7 @@ function HomePage() {
 
       {addUserModal && <AddUserModal setAddUserModal={setAddUserModal} />}
 
-      <div className="w-full flex justify-center overflow-hidden">
+      <div className="w-full h-screen flex justify-center overflow-hidden">
         <DesktopMenu
           user={user}
           productModalOpen={productModalOpen}

@@ -32,13 +32,13 @@ const Sidebar = ({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="w-full flex justify-center">
-        <p className="text-white">Hi! {user.user_name || ""}</p>
+        <p className="text-white">Hi! &#128075; {user.user_name || ""}</p>
       </div>
-      <hr className="w-full my-4 border-white/20" />
+      <hr className="w-full my-2 border-white/20" />
       {/* Home and Dashboard Items */}
-      <div className="w-full flex flex-col gap-2 px-2">
+      <div className="w-full flex flex-col gap-1 px-2">
         <Link
           href={"/"}
           className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10"
@@ -58,13 +58,13 @@ const Sidebar = ({
       </div>
       {/* End Home and Dashboard Items */}
       {user.user_role === "Admin" && (
-        <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
+        <h3 className="text-md font-semibold text-white/90 py-3 px-3 tracking-wider">
           Users
         </h3>
       )}
       {/* Start User Lists */}
       {user.user_role === "Admin" && (
-        <div className="w-full flex flex-col gap-2 px-2">
+        <div className="w-full flex flex-col gap-1 px-2">
           <div
             onClick={() => {
               setAddUserModal(true);
@@ -85,11 +85,11 @@ const Sidebar = ({
         </div>
       )}
       {/* End User Lists */}
-      <h3 className="text-md font-semibold text-white/90 py-4 px-3 tracking-wider">
+      <h3 className="text-md font-semibold text-white/90 py-2 px-3 tracking-wider">
         Products
       </h3>
       {/* Start Product Lists */}
-      <div className="w-full flex flex-col gap-2 px-2">
+      <div className="w-full flex flex-col gap-1 px-2">
         {/* Add Product */}
         <div
           className="flex pl-8 py-2 items-center gap-2 rounded-md hover:bg-white/10 cursor-pointer"
@@ -115,7 +115,7 @@ const Sidebar = ({
         View Data Entries
       </h3>
       {/* View Data Entries Starts Here */}
-      <div className="w-full flex flex-col gap-2 px-2">
+      <div className="w-full flex flex-col gap-1 px-2">
         {/* View Data */}
         <Link
           href={"/view-row-hygiene"}
@@ -152,7 +152,7 @@ const Sidebar = ({
       <div className="px-4">
         <div
           onClick={logoutHandler}
-          className="hover:bg-white/30 bg-white/10 w-full py-2 mt-6 rounded-md text-white text-md flex justify-center items-center gap-2 cursor-pointer"
+          className="hover:bg-white/30 bg-white/10 w-full py-2 mt-4 rounded-md text-white text-md flex justify-center items-center gap-2 cursor-pointer"
         >
           <AiOutlineLogout size={18} className="text-white" />
           Logout

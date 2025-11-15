@@ -9,6 +9,7 @@ import Loader from "@/components/Loader";
 import { toast } from "react-toastify";
 import DownloadExcel from "@/components/DownloadExcel";
 import ProductSold from "@/components/ProductSold";
+import NoDataPage from "@/components/NoDataPage";
 
 const ViewAllProducts = () => {
   const [productsData, setProductsData] = useState([]);
@@ -23,13 +24,16 @@ const ViewAllProducts = () => {
   }, [updateModal]);
 
   async function fetchProducts() {
+    loading(true);
     const response = await axios.get("/api/product/getallproducts");
     setProductsData(response.data.data);
+    loading(false);
   }
 
   // Delete Product
   //  Delete Function
   async function deleteProduct(id) {
+    loading(true);
     const response = await axios.delete("/api/product/deleteproductbyid", {
       params: {
         id: id,
@@ -41,6 +45,7 @@ const ViewAllProducts = () => {
     } else {
       toast.error(response.data.message);
     }
+    loading(false);
   }
 
   // Get User Data
@@ -50,7 +55,7 @@ const ViewAllProducts = () => {
   }
   return (
     <>
-      {!productsData.length > 0 && <Loader />}
+      {loading && <Loader />}
       {updateModal && (
         <ProductSold
           loading={loading}
@@ -76,121 +81,129 @@ const ViewAllProducts = () => {
           </div>
           {/* Desktop Table */}
           <div className="w-full hidden md:block">
-            {/* Table For Product View */}
-            <table className="w-full bg-gray-50">
-              <thead>
-                <tr className="text-white/90 font-semibold bg-orange-600">
-                  <th className="text-center border border-orange-300 py-2 px-1">
-                    Sl No.
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Product Name
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Purchase Price
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Business Type
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Quantity
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Payment mode
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Purchase Date
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Status
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Sold Paymt Mode
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Change Status
-                  </th>
-                  <th className="text-center border border-orange-300 py-1 px-1">
-                    Barcode
-                  </th>
-                  {user.user_role === "Admin" && (
-                    <th className="text-center border border-orange-300 py-1 px-1">
-                      Actions
+            {!productsData.length > 0 ? (
+              <NoDataPage />
+            ) : (
+              <table className="w-full bg-gray-50">
+                <thead>
+                  <tr className="text-white/90 font-semibold bg-orange-600">
+                    <th className="text-center border border-orange-300 py-2 px-1">
+                      Sl No.
                     </th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {productsData.map((product, index) => (
-                  <tr key={product._id} className="text-black ">
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {index + 1}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.product_name}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.purchase_price}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.business_type || "NA"}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.quantity}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.payment_mode}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {new Date(product.purchase_date).toLocaleString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.status}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      {product.sold_payment_mode}
-                    </td>
-                    <td className="text-center border border-orange-300 py-1 px-1">
-                      <button
-                        onClick={() => {
-                          setProductId(product._id);
-                          setUpdateModal(true);
-                        }}
-                        className="px-3 py-1 text-sm bg-blue-700 rounded-sm shadow-sm text-white cursor-pointer hover:opacity-90"
-                      >
-                        Update
-                      </button>
-                    </td>
-
-                    <td className="text-center border border-orange-300">
-                      <div className="overflow-hidden flex justify-center p-1">
-                        <QRCodeSVG value={product.product_name} size={80} />
-                      </div>
-                    </td>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Product Name
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Purchase Price
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Business Type
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Quantity
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Payment mode
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Purchase Date
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Status
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Sold Paymt Mode
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Change Status
+                    </th>
+                    <th className="text-center border border-orange-300 py-1 px-1">
+                      Barcode
+                    </th>
                     {user.user_role === "Admin" && (
-                      <td className="text-center border border-orange-300 py-1 px-1">
-                        <div className="w-full flex justify-center items-center gap-2">
-                          <MdOutlineDelete
-                            size={25}
-                            onClick={() => deleteProduct(product._id)}
-                            className="text-red-600 cursor-pointer"
-                          />
-                        </div>
-                      </td>
+                      <th className="text-center border border-orange-300 py-1 px-1">
+                        Actions
+                      </th>
                     )}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {productsData.map((product, index) => (
+                    <tr key={product._id} className="text-black ">
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {index + 1}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.product_name}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.purchase_price}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.business_type || "NA"}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.quantity}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.payment_mode}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {new Date(product.purchase_date).toLocaleString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          }
+                        )}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.status}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        {product.sold_payment_mode}
+                      </td>
+                      <td className="text-center border border-orange-300 py-1 px-1">
+                        <button
+                          onClick={() => {
+                            setProductId(product._id);
+                            setUpdateModal(true);
+                          }}
+                          className="px-3 py-1 text-sm bg-blue-700 rounded-sm shadow-sm text-white cursor-pointer hover:opacity-90"
+                        >
+                          Update
+                        </button>
+                      </td>
+
+                      <td className="text-center border border-orange-300">
+                        <div className="overflow-hidden flex justify-center p-1">
+                          <QRCodeSVG value={product.product_name} size={80} />
+                        </div>
+                      </td>
+                      {user.user_role === "Admin" && (
+                        <td className="text-center border border-orange-300 py-1 px-1">
+                          <div className="w-full flex justify-center items-center gap-2">
+                            <MdOutlineDelete
+                              size={25}
+                              onClick={() => deleteProduct(product._id)}
+                              className="text-red-600 cursor-pointer"
+                            />
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {/* Table For Product View */}
           </div>
           {/* Desktop Table Ends Here*/}
           {/* Mobile Table Starts Here*/}
 
           <div className="w-full md:hidden flex flex-col justify-center gap-4 mt-4">
+            {!productsData.length > 0 && <NoDataPage />}
             {/* Table Main */}
             {productsData.map((product, index) => (
               <div

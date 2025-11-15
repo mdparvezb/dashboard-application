@@ -55,10 +55,10 @@ const DataEntry = ({ productModalOpen, setProductModalOpen }) => {
 
   return (
     <>
-      <div className="w-full h-full pb-4 flex-col md:w-[78%] items-center justify-center overflow-hidden">
+      <div className="w-full h-full pb-4 flex-col md:w-[78%] items-center justify-center overflow-auto">
         {/* Item Selling Menus */}
         <div className="w-full mt-10">
-          <h1 className="text-3xl w-full text-center font-bold text-shadow-black text-shadow-xs">
+          <h1 className="text-3xl w-full text-center font-bold text-shadow-black text-slate-800 text-shadow-xs">
             Add Transactions
           </h1>
         </div>

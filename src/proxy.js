@@ -12,6 +12,7 @@ export async function proxy(request) {
 
   // Check token and redirect
   const token = request.cookies.get("token")?.value || "";
+
   if (isPublic && token) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
   }
