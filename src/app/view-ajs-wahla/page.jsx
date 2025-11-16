@@ -20,7 +20,7 @@ const ViewAjsWahlaData = () => {
   }, []);
 
   async function fetchTransactions() {
-    loading(true);
+    setLoading(true);
     const response = await axios.get(
       "/api/salestransactions/getalltransactions"
     );
@@ -28,11 +28,11 @@ const ViewAjsWahlaData = () => {
       (trans) => trans.business_type === "ajs_wahla"
     );
     setAjsWahlaData(filteredData);
-    loading(false);
+    setLoading(false);
   }
   //  Delete Function
   async function deleteTransaction(id) {
-    loading(true);
+    setLoading(true);
     const response = await axios.delete(
       "/api/salestransactions/deletetransbyid",
       {
@@ -47,7 +47,7 @@ const ViewAjsWahlaData = () => {
     } else {
       toast.error(response.data.message);
     }
-    loading(false);
+    setLoading(false);
   }
 
   // Get User Data

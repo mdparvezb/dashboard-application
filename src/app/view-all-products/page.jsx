@@ -24,16 +24,15 @@ const ViewAllProducts = () => {
   }, [updateModal]);
 
   async function fetchProducts() {
-    loading(true);
+    setLoading(true);
     const response = await axios.get("/api/product/getallproducts");
     setProductsData(response.data.data);
-    loading(false);
+    setLoading(false);
   }
 
-  // Delete Product
   //  Delete Function
   async function deleteProduct(id) {
-    loading(true);
+    setLoading(true);
     const response = await axios.delete("/api/product/deleteproductbyid", {
       params: {
         id: id,
@@ -45,7 +44,7 @@ const ViewAllProducts = () => {
     } else {
       toast.error(response.data.message);
     }
-    loading(false);
+    setLoading(false);
   }
 
   // Get User Data
