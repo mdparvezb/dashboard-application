@@ -24,18 +24,20 @@ function HomePage() {
 
   return (
     <>
-      <MobileMenu
-        user={user}
-        isMobileMenu={isMobileMenu}
-        setIsMobileMenu={setIsMobileMenu}
-        productModalOpen={productModalOpen}
-        setProductModalOpen={setProductModalOpen}
-        setAddUserModal={setAddUserModal}
-      />
+      <div className="w-full">
+        <MobileMenu
+          user={user}
+          isMobileMenu={isMobileMenu}
+          setIsMobileMenu={setIsMobileMenu}
+          productModalOpen={productModalOpen}
+          setProductModalOpen={setProductModalOpen}
+          setAddUserModal={setAddUserModal}
+        />
+      </div>
 
       {addUserModal && <AddUserModal setAddUserModal={setAddUserModal} />}
 
-      <div className="w-full h-screen flex justify-center overflow-hidden">
+      <div className="w-full h-screen flex justify-center overflow-auto">
         <DesktopMenu
           user={user}
           productModalOpen={productModalOpen}
@@ -45,7 +47,7 @@ function HomePage() {
           setAddUserModal={setAddUserModal}
         />
 
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col items-center">
           <Navbar setIsMobileMenu={setIsMobileMenu} />
           <DataEntry
             productModalOpen={productModalOpen}

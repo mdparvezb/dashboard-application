@@ -1,23 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f4f6f8; /*(Light Gray)*/
-  /* --foreground: #171717;
-  Primary: #1E88E5 (Strong Blue)
-
-Secondary: #1565C0 (Deep Blue)
-
-Accent: #43A047 (Success Green)
-
-Background: 
-
-Card / Panel: #FFFFFF (White)
-
-Text Primary: #212121
-
-Text Secondary: #616161 */
-}
-
 * {
   box-sizing: border-box;
 }
