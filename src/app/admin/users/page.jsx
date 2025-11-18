@@ -142,7 +142,11 @@ const Users = () => {
                   <div className="px-4 py-2 border-l border-orange-200 font-semibold">
                     {(currentUser.user_name || "") !== user.user_name && (
                       <div className="w-full flex items-center gap-4">
-                        <MdOutlineDelete size={25} className="text-red-600" />
+                        <MdOutlineDelete
+                          size={25}
+                          onClick={() => deleteUser(user._id)}
+                          className="text-red-600"
+                        />
                       </div>
                     )}
                   </div>
